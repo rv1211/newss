@@ -213,14 +213,6 @@
 				</div>
 			</div>
 			<div class="panel-body container-fluid">
-				<!-- <div class="row row-lg">
-                    <div class="btn-group" style="bottom: 8px;">
-                        <button type=" button print_btn" id="multi_print" class="btn btn-primary waves-effect waves-classic">Multiple Print</button>
-                        <button type="button print_btn" id="multi_print_manifest" class="btn btn-primary waves-effect waves-classic waves-effect waves-classic">Print Multiple Manifest</button>
-                        <button type="button" id="multiple_delete" class="btn btn-danger">Delete Multiple</button>
-                    </div>
-                </div> -->
-
 				<div class="row row-lg">
 					<div class="col-xl-12">
 						<!-- Example Tabs -->
