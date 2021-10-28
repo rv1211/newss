@@ -1,0 +1,157 @@
+.pincode-serviceability {
+    display: flex;
+}
+
+@media only screen and (min-width: 1440px) {
+    .pincode-card-content {
+        padding: 24px 33px;
+    }
+}
+
+.pincode-card-content {
+    flex: 1 1 auto;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    margin-top: 16px;
+}
+
+@media only screen and (min-width: 1440px) {
+    .fedex-body {
+        margin-bottom: 23px !important;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .right-section {
+        padding-right: 7px;
+        margin-top: -21px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .panel .head-section-icon {
+        margin-bottom: 16px;
+    }
+}
+
+.panel .head-section-icon {
+    margin-bottom: 16px;
+}
+
+@media only screen and (min-width: 1440px) {
+    .pincode-card-content .right-section .head {
+        margin-right: 0px;
+        padding-top: 15px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .pincode-card-content .p-txt {
+        margin-top: 14px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .p-txt img {
+        margin-top: 3px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .right-section {
+        padding-right: 7px;
+        margin-top: -2px;
+    }
+}
+
+.pincode-card-content .right-section p {
+    text-align: right;
+}
+
+@media only screen and (min-width: 1440px) {
+    .serviceable-city {
+        padding-left: 11px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .serviceable-state {
+        margin: 0 5px 0 64px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .pincode-service-blue-bar-content {
+        padding: 29px 0px;
+        display: block;
+        background-color: #073F8C !important;
+    }
+}
+
+.pincode-service-blue-bar-content .serviceability-key {
+    opacity: 0.84;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+
+.pincode-service-blue-bar-content .serviceability-value {
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: #ffffff;
+    padding-left: 4px;
+}
+
+.pincode-card-content p {
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #344563;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.pincode-card-content .right-section .head {
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: right;
+    padding-top: 15px;
+    color: #7a869a;
+}
+
+.arrow-icon {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 29px;
+    color: #073F8C;
+}
+
+.pincode-button {
+    margin-top: 20px;
+}
+
+.pincode-panel {
+    width: 340px !important;
+    margin: 0px 8px;
+}
+
+.delivery-icon {
+    height: 23px !important;
+    margin-top: 10px !important;
+}

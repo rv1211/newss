@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="33.393" y1="11.159" x2="33.393" y2="62.891">
+			<stop offset="0" stop-color="#57b3ff"  />
+			<stop offset="1" stop-color="#2d6ffe"  />
+		</linearGradient>
+		<linearGradient id="grd2" gradientUnits="userSpaceOnUse"  x1="21.19" y1="11.159" x2="21.19" y2="24.675">
+			<stop offset="0" stop-color="#f8fafb"  />
+			<stop offset="1" stop-color="#d8dee1"  />
+		</linearGradient>
+		<linearGradient id="grd3" gradientUnits="userSpaceOnUse"  x1="47.174" y1="41.594" x2="47.174" y2="54.783">
+			<stop offset="0" stop-color="#fdcf2d"  />
+			<stop offset="1" stop-color="#fea40a"  />
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: url(#grd1) } 
+		.shp1 { fill: url(#grd2) } 
+		.shp2 { fill: url(#grd3) } 
+	</style>
+	<path id="Layer" fill-rule="evenodd" class="shp0" d="M62.73 14.2C62.73 12.52 61.37 11.16 59.69 11.16L43.38 11.16L41.61 11.16L25.2 11.16L22.31 11.16L7.1 11.16C5.42 11.16 4.06 12.52 4.06 14.2L4.06 57.62C4.06 59.02 4.49 60.36 5.27 61.35C6.05 62.34 7.11 62.89 8.21 62.89L58.58 62.89C59.68 62.89 60.73 62.34 61.51 61.35C62.29 60.36 62.73 59.02 62.73 57.62L62.73 14.2Z" />
+	<path id="Layer" class="shp1" d="M16.01 24.67C16.43 24.67 16.84 24.51 17.14 24.21L21.19 20.17L25.22 24.21C25.45 24.43 25.73 24.58 26.04 24.64C26.35 24.7 26.67 24.67 26.96 24.55C27.25 24.43 27.5 24.23 27.67 23.97C27.85 23.7 27.94 23.4 27.94 23.08L27.94 11.16L14.44 11.16L14.44 23.08C14.44 23.5 14.6 23.9 14.9 24.2C15.19 24.5 15.59 24.67 16.01 24.67Z" />
+	<path id="Layer" class="shp2" d="M54.03 41.6C49.49 44.37 46.22 47.87 44.89 49.43L41.48 46.77C41.39 46.7 39.52 48.36 39.57 48.41L45.78 54.71C45.82 54.76 45.88 54.78 45.95 54.78C45.96 54.78 45.98 54.78 46 54.78C46.08 54.76 46.15 54.71 46.18 54.62C47.18 52.07 50.48 46.73 54.7 42.86C54.78 42.79 54.8 42.68 54.76 42.58C54.76 42.58 54.09 41.56 54.03 41.6Z" />
+</svg>

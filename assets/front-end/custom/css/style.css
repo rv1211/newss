@@ -1,0 +1,33 @@
+.password_signup {
+    display: flex;
+}
+
+.pwd-input {
+    width: 564px;
+}
+
+.eye_icon_login {
+    margin-left: -40px;
+    padding: 12px;
+    top: 12px;
+}
+
+.eye_icon_signup {
+    margin-left: -40px;
+    padding: 12px;
+    top: 4px;
+}
+
+.login-form .extra .checkbox input[type="checkbox"] {
+    top: -2px !important;
+}
+
+.login-form .extra .checkbox input[type="checkbox"]:before {
+    width: 13px !important;
+    height: 14px !important;
+}
+
+.login-form .extra .checkbox input[type="checkbox"]:after {
+    width: 6px !important;
+    height: 12px !important;
+}

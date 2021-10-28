@@ -1,0 +1,176 @@
+p.wow.fadeInUp.top_banner_content {
+    margin-bottom: 15px;
+}
+
+.plans-inner-grid {
+    background: #efefef;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 25px;
+    height: 210px;
+}
+
+.plans_essential .icon_left_grid img {
+    height: 60px;
+}
+
+.plans_essential .plan_content_right {
+    padding-left: 25px;
+}
+
+.plans_essential .plan_grid_right_info .plan_content_right p {
+    font-size: 16px;
+    line-height: 28px;
+    color: #6a7695;
+    font-weight: 300;
+    margin-bottom: 0;
+}
+
+.plans_essential .plan_grid_right_info .plan_content_right h4 {
+    font-size: 20px;
+}
+
+
+/*.new_footer_top{
+    padding: 0px;
+}*/
+
+
+/* .new_footer_area .footer_bottom {
+    padding-top: 10px;
+}
+
+.footer_bottom {
+    padding: 10px 0px;
+} */
+
+.who_we_are .sub-tittle p {
+    font-size: 16px;
+    color: #6a7695;
+    font-weight: 300;
+}
+
+.who_we_are .logistics_manager {
+    background: #e0e8ef;
+    padding: 20px;
+}
+
+.who_we_are figure.figure-img-right img {
+    height: 100%;
+    width: 100%;
+}
+
+section.who_we_are {
+    padding: 50px 0px 25px;
+}
+
+.text_reg {
+    margin-top: 5px;
+}
+
+
+/* Footer css start */
+
+
+/* .new_footer_top {
+    padding: 120px 0px 50px;
+} */
+
+
+/* Footer css end */
+
+label.error {
+    color: red;
+}
+
+
+/* Notification */
+
+#result_error {
+    position: fixed;
+    top: 51px;
+    width: 23%;
+    right: 0px;
+    height: auto;
+    z-index: 9999;
+    text-align: center;
+    font-weight: normal;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #d9534f;
+}
+
+#result {
+    position: fixed;
+    top: 51px;
+    width: 23%;
+    right: 0px;
+    height: auto;
+    z-index: 9999;
+    text-align: center;
+    font-weight: normal;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #7fd07ff2;
+}
+
+
+/* Notification */
+
+
+/* Start order form  */
+
+.title1 {
+    padding-top: 0%;
+}
+
+.panel-body {
+    padding-bottom: 0%;
+    padding-top: 0%;
+}
+
+.panel-title {
+    padding-bottom: 0%;
+    padding-top: 0%;
+}
+
+.form-group form-material {
+    margin-top: 1em;
+}
+
+.get_price_button {
+    padding-left: 63px;
+    padding-bottom: 2px;
+}
+
+
+/* End order form  */
+
+
+/*start Changes by unnati*/
+
+.partner_info .logo_item img {
+    filter: none;
+}
+
+.breadcrumb_area {
+    /* background-image: none; */
+    padding: 144px 0px 50px;
+    background-image: -moz-linear-gradient(180deg, #5e2ced40 0%, #a485fd26 100%);
+    background-image: -webkit-linear-gradient(180deg, #5e2ced40 0%, #a485fd26 100%);
+    background-image: -ms-linear-gradient(180deg, #5e2ced40 0%, #a485fd26 100%);
+}
+
+.about_content {
+    bottom: 0px;
+    padding: 30px;
+}
+
+
+/*end Changes by unnati*/

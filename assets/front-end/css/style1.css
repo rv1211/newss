@@ -1,0 +1,225 @@
+body {
+    background-color: #f4f4f4 !important;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+}
+
+.panel.panel-flat {
+  margin-bottom: 30px;
+    border: 1px solid transparent;
+    transition: all .3s ease;
+    letter-spacing: .5px;
+    /*box-shadow: 1px 5px 24px 0 rgba(37,121,237,.1);*/
+    box-shadow: 2px 2px 40px -12px #999;
+    background: #FFFFFF;
+    border-radius: 15px;
+}
+
+.panel.panel-flat .panel-heading {
+    border-radius: 8px;
+}
+
+.select2-container:hover, input:hover, textarea:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.select2-container {
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
+    transition: box-shadow .3s ease;
+    border: 1px solid #0000002e !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
+    transition: box-shadow .3s ease;
+    border: 1px solid #0000002e !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+    /*z-index: 0 !important;*/
+}
+
+.select2-container--open .select2-dropdown--above {
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
+    transition: box-shadow .3s ease;
+    border: 1px solid #0000002e !important;
+}
+
+input, textarea {
+    border-radius: 8px !important;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07) !important;
+    transition: box-shadow .3s ease;
+    border: 1px solid #0000002e !important;
+}
+
+input:focus, textarea:focus {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0,0.09) !important;
+    border: 1px solid #0000006e !important;
+    background-color: #ffffff !important;
+}
+
+/* Skeleton Layout */
+@-webkit-keyframes skeletonShimmer {
+    0% {
+        opacity: 0.45;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes skeletonShimmer {
+    0% {
+        opacity: 0.45;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.loading-skeleton {
+    line-height: initial;
+    border-radius: 7px;
+    /*width: 100%;*/
+    /*background-color: #ebeef0;
+    -webkit-animation: prideShimmer 600ms linear infinite forwards alternate;
+    animation: prideShimmer 600ms linear infinite forwards alternate;*/
+
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: placeHolderShimmer;
+    -webkit-animation-timing-function: linear;
+    background: #ebeef0;
+    background-image: linear-gradient(to right, #ebeef0 0%, rgba(229, 229, 229, 1) 20%, #ebeef0 40%, #ebeef0 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 100%;
+    /*height: calc(150px);*/
+    position: relative;
+}
+
+.type--subdued .loading-skeleton {
+    color: transparent !important;
+    stroke: transparent !important;
+}
+
+#index_span.type--subdued {
+    display: grid;
+}
+
+/* Graph skeleton */
+#view_chart_div .chart {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    max-width: 80%;
+    /*height: 400px;*/
+    margin: 0 auto;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.1) 1%, rgba(0, 0, 0, 0) 1%);
+    background-size: 100% 80px;
+    background-position: left top;
+}
+#view_chart_div .chart li {
+    position: relative;
+    display: table-cell;
+    vertical-align: bottom;
+    height: 380px;
+}
+#view_chart_div .chart li .loading-skeleton {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+#view_chart_div .chart span {
+    margin: 0 10px;
+    display: block;
+    /*background: rgba(209, 236, 250, 0.75);*/
+    /*animation: draw 1s ease-in-out;*/
+}
+#view_chart_div .chart span:before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 5px 1em 0;
+    display: block;
+    text-align: center;
+    content: attr(title);
+    word-wrap: break-word;
+}
+
+@-webkit-keyframes placeHolderShimmer {
+    0% {
+        background-position: -468px 0
+    }
+    100% {
+        background-position: 468px 0
+    }
+}
+
+@-webkit-keyframes prideShimmer {
+    from {
+        background-position: top left
+    }
+    to {
+        background-position: top right
+    }
+}
+/* Menu and its dropdown menu*/
+.navbar {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu > li > a, .navbar-default .navbar-nav > li > a {
+    color: rgb(102, 102, 102) !important;
+}
+
+.navbar-nav > li > .dropdown-menu, .dropdown-menu > .dropdown-submenu > .dropdown-menu {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+}
+
+.navbar-nav > li > .dropdown-menu:after,
+.navbar-nav > li > .dropdown-menu:before {
+    bottom: 100%;
+}
+
+.navbar-nav > li > .dropdown-menu:after,
+.navbar-nav > li > .dropdown-menu:before {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.navbar-nav > li > .dropdown-menu:before {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav > li > .dropdown-menu:after {
+    border-bottom-color: #ffffff;
+}
+
+.navbar-nav > li > .dropdown-menu:before {
+    /*border-color: rgba(113, 158, 206, 0);*/
+    border-width: 10px;
+    left: 20%;
+    margin-left: -10px;
+}
+
+.navbar-nav > li > .dropdown-menu:after {
+    /*border-color: rgba(255, 255, 255, 0);*/
+    border-width: 9px;
+    left: 20%;
+    margin-left: -9px;
+}

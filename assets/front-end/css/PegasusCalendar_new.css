@@ -1,0 +1,376 @@
+small,
+ul {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+	font-size: 100%;
+	vertical-align: baseline
+}
+
+ol,
+ul {
+	list-style: none
+}
+
+.pegasus-cal {
+	/*font-family: "Proxima Regular";*/
+	max-width: 430px;
+	width: 100%;
+	font-size: 12px;
+	overflow: hidden;
+	display: none;
+	z-index: 0;
+	position: absolute;
+    padding: 10px!important;
+    background: #FFFFFF;
+	box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.1);
+	border-radius: 14px;
+}
+.pegasus-cal .cal-head {
+	background: linear-gradient(80deg, #00aeff, #3369e7);
+	color: #fff;
+	line-height: 40px;
+	height: 40px;
+	font-size: 1.25em;
+	padding: 0 0 0 10px;
+	-moz-transition: all .25s linear 0s;
+	-o-transition: all .25s linear 0s;
+	-webkit-transition: all .25s linear;
+	-webkit-transition-delay: 0s;
+	transition: all .25s linear 0s;
+	display: none;
+}
+.pegasus-cal .cal-head a.change-type {
+	padding: 0 0 0 7px;
+	font-size: .8em;
+	color: #00b5d3
+}
+.pegasus-cal .cal-head a.change-type:hover,
+.pegasus-cal .cal-head a.change-type:focus {
+	color: #07dcff
+}
+.pegasus-cal .cal-body {
+	overflow: hidden;
+	padding: 6px;
+}
+.pegasus-cal .body-left {
+	width: 25%;
+	float: left;
+	background: #FFFFFF;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.12);
+	border-radius: 14px;
+}
+.pegasus-cal .body-right {
+	float: left;
+	width: 75%
+}
+.pegasus-cal ul.month-list {
+	position: relative;
+	overflow-x: hidden;
+    overflow-y: scroll;
+    height: 340px;
+}
+.pegasus-cal ul.month-list li {
+	line-height: 28px;
+	position: relative;
+	z-index: 3
+}
+.pegasus-cal ul.month-list li a {
+	color: #B8C5D3;
+	padding: 0 0 0 10px;
+	display: block;
+	-moz-transition: all .2s ease 0s;
+	-o-transition: all .2s ease 0s;
+	-webkit-transition: all .2s ease;
+	-webkit-transition-delay: 0s;
+	transition: all .2s ease 0s
+}
+@media only screen and (max-width:610px) and (min-width:1px) {
+	.pegasus-cal ul.month-list li a {
+		padding: 0 0 0 10px
+	}
+}
+.pegasus-cal ul.month-list li small {
+	color: #868686;
+	font-size: 85%;
+	margin-left: 10px
+}
+@media only screen and (max-width:610px) and (min-width:1px) {
+	.pegasus-cal ul.month-list li small {
+		margin-left: 0
+	}
+}
+.pegasus-cal ul.month-list li.active-mark {
+	background: #fff;
+	border-left: 3px solid #CFDDFF;
+	left: 0;
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	height: 28px;
+	width: 100%
+}
+.pegasus-cal .days-head {
+	text-transform: uppercase;
+	width: 100%;
+	line-height: 24px;
+	color: #748AA1;
+	margin-right: 24px;
+	table-layout: fixed
+}
+.pegasus-cal .days-head td,
+.pegasus-cal .days-head th {
+	text-align: center;
+	font-weight: bold
+}
+.pegasus-cal .month-wrapper {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 302px
+}
+.pegasus-cal .month-wrapper .month-box {
+	position: relative
+}
+.pegasus-cal .month-wrapper .month-box .month-title {
+	padding: 0 0 5px 0;
+	/*border-bottom: 2px solid #e1e1e1;*/
+	font-size: 15px;
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	z-index: 10;
+	color: #748AA1;
+	font-weight: bold;
+}
+.pegasus-cal .day-container.adjust-month {
+	padding: 40px 0 0 0
+}
+.pegasus-cal .day-container-table {
+	width: 100%;
+	table-layout: fixed;
+	text-align: center;
+	font-size: 15px;
+	color: #748AA1;
+}
+.pegasus-cal .day-container-table tr {
+	height: 36px
+}
+.pegasus-cal .day-container-table td {
+	vertical-align: middle;
+	position: relative;
+	text-align: center
+}
+.pegasus-cal .day-container-table td a {
+	display: block;
+	height: 30px;
+	color: inherit
+}
+.pegasus-cal .day-container-table td .day-num {
+	display: block;
+	padding: 4px 0 6px
+}
+.pegasus-cal .day-container-table td.mid-daybox {
+	background-color: #e6fbff
+}
+.pegasus-cal .day-container-table td .price {
+	color: gray;
+	font-size: 75%;
+	display: block
+}
+.pegasus-cal .day-container-table td .price.lowestPrice {
+	color: #00a600
+}
+.pegasus-cal .day-container-table td .price .RupeeSign {
+	display: none
+}
+.pegasus-cal .day-container-table td.tdWeekend p.holiday-desc {
+	right: 2px;
+	left: auto
+}
+.pegasus-cal .day-container-table td.tdWeekend p.holiday-desc:after {
+	right: 10px;
+	left: auto
+}
+.pegasus-cal .day-container-table td.tdWeekend:first-child p.holiday-desc {
+	right: auto;
+	left: 40px
+}
+.pegasus-cal .day-container-table td.tdWeekend:first-child p.holiday-desc:after {
+	right: auto;
+	left: 10px
+}
+.pegasus-cal .day-container-table td:hover {
+	background-color: #cdf7ff
+}
+.pegasus-cal .day-container-table td:hover p.holiday-desc {
+	visibility: visible;
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+	opacity: 1;
+	top: 0
+}
+.pegasus-cal .day-container-table td.disabled,
+.pegasus-cal .day-container-table td.inActiveTD {
+	color: #B8C5D3;
+	background-color: transparent;
+}
+.pegasus-cal .day-container-table td.disabled a,
+.pegasus-cal .day-container-table td.inActiveTD a {
+	cursor: default
+}
+.pegasus-cal .day-container-table td.disabled a .price,
+.pegasus-cal .day-container-table td.inActiveTD a .price {
+	display: none
+}
+.pegasus-cal .day-container-table td.disabled .holiday-desc,
+.pegasus-cal .day-container-table td.disabled .holiday-ico,
+.pegasus-cal .day-container-table td.inActiveTD .holiday-desc,
+.pegasus-cal .day-container-table td.inActiveTD .holiday-ico {
+	display: none!important
+}
+.pegasus-cal .day-container-table td.return-daybox,
+.pegasus-cal .day-container-table td.depart-daybox {
+	background-color: #00b5d3;
+	color: #fff
+}
+.pegasus-cal .day-container-table td.return-daybox .price,
+.pegasus-cal .day-container-table td.depart-daybox .price {
+	color: #fff
+}
+.pegasus-cal .calViewMessage {
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 40px;
+	z-index: 5;
+	height: 35px;
+	line-height: 35px;
+	margin: 0;
+	display: none;
+	overflow: hidden
+}
+.pegasus-cal .calViewMessage a.close-cal {
+	position: absolute;
+	top: 10px;
+	right: 5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background-position: -233px -52px;
+	filter: alpha(opacity=80);
+	opacity: .8;
+	-moz-transition: all .25s ease-in-out 0s;
+	-o-transition: all .25s ease-in-out 0s;
+	-webkit-transition: all .25s ease-in-out;
+	-webkit-transition-delay: 0s;
+	transition: all .25s ease-in-out 0s
+}
+.pegasus-cal .calViewMessage a.close-cal:hover {
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+	filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+	opacity: 1
+}
+.pegasus-cal .js-month-container {
+	position: relative
+}
+.pegasus-cal *,
+.pegasus-cal *:before,
+.pegasus-cal *:after {
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box
+}
+.pegasus-cal p.holiday-desc {
+	display: block;
+	visibility: hidden;
+	background: #333;
+	border: 1px solid #333;
+	border-radius: 3px;
+	box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.5);
+	color: #fff;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 18px;
+	min-width: 100px;
+	padding: 5px 10px;
+	position: absolute;
+	text-align: center;
+	white-space: nowrap;
+	z-index: 100000;
+	margin: -30px 0 0 -36px;
+	top: -20px;
+	left: 0;
+	cursor: default;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	-moz-transition: all .2s ease-in-out 0s;
+	-o-transition: all .2s ease-in-out 0s;
+	-webkit-transition: all .2s ease-in-out;
+	-webkit-transition-delay: 0s;
+	transition: all .2s ease-in-out 0s;
+	-moz-transform: scale(1.03);
+	-ms-transform: scale(1.03);
+	-webkit-transform: scale(1.03);
+	transform: scale(1.03)
+}
+.pegasus-cal p.holiday-desc:after {
+	border-color: #333 transparent transparent;
+	border-style: solid;
+	border-width: 10px;
+	content: "";
+	height: 0;
+	left: 50px;
+	position: absolute;
+	top: 29px;
+	width: 0
+}
+.pegasus-cal .holiday-ico {
+	background: #f5951d;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	height: 5px;
+	right: 7px;
+	top: 7px;
+	width: 5px;
+	position: absolute
+}
+.pegasus-cal .pg-indicators {
+	float: right
+}
+.pegasus-cal .pg-indicators .indicator {
+	font-size: 12px;
+	margin-right: 10px;
+	color: #ccc
+}
+.pegasus-cal .pg-indicators .indicator span {
+	margin: 15px 5px 0 0
+}
+.pegasus-cal .pg-indicators .holiday-ico {
+	width: 10px;
+	height: 10px;
+	position: static
+}
+@media all and (max-width:479px) {
+	.pegasus-cal .pg-indicators {
+		display: none
+	}
+}
+.pegasus-cal.slide-helper {
+	-moz-transition: all .3s ease 0s;
+	-o-transition: all .3s ease 0s;
+	-webkit-transition: all .3s ease;
+	-webkit-transition-delay: 0s;
+	transition: all .3s ease 0s;
+	display: block!important;
+	opacity: 1!important
+}

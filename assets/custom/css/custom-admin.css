@@ -1,0 +1,439 @@
+.left {
+    float: left;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right {
+    float: right;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.center {
+    text-align: center;
+}
+
+label.error {
+    color: red;
+}
+
+.site-navbar .navbar-header .navbar-brand-logo {
+    height: 42px;
+    margin-top: -16px;
+}
+
+.site-navbar .navbar-container{
+	margin-left: 72px;
+}
+
+.wallet_transaction_select_amount {
+    margin: 0px 0px 10px 15px;
+    padding: 5px;
+    text-align: center;
+    background-color: #F7F7FC;
+    border: 1px solid #ddd;
+    color: #333333;
+    width: 110px;
+}
+
+.nav-tabs .nav-link.active{
+	
+    color: #030303;
+    background-color: #ece6e6;
+    border-color: transparent;
+    border-bottom: 3px solid #EC407A;
+    border-bottom-color: #EC407A;
+}
+
+.nav-tabs .nav-link.active:hover{
+	
+    color: #030303;
+    background-color: #ece6e6;
+    border-color: transparent;
+    border-bottom: 3px solid #EC407A;
+    border-bottom-color: #EC407A;
+}
+
+.btn-secondary,.btn-primary,.btn-secondary:hover{
+
+   background-color: #045fa7 !important;
+}
+
+
+
+body {
+    /* font-family: "Roboto", Helvetica Neue, Helvetica, Arial, sans-serif; */
+    font-size: 13px;
+    line-height: 1.5384616;
+    color: #333333;
+    background-color: #f6f7fb;
+    font-family: ProximaNovaLight,ProximaNovaRegular,'Source Sans Pro',Arial,sans-serif;
+    letter-spacing: 0.8px;
+
+
+}
+
+
+
+
+/* Notification */
+
+#result_error,
+#result_error_message {
+    position: fixed;
+    top: 88px;
+    width: 30%;
+    right: 0px;
+    height: auto;
+    z-index: 105;
+    text-align: center;
+    font-weight: normal;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #d9534f;
+}
+
+#result,
+#result_message {
+    position: fixed;
+    top: 88px;
+    width: 30%;
+    right: 0px;
+    height: auto;
+    z-index: 105;
+    text-align: center;
+    font-weight: normal;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #7fd07ff2;
+}
+
+
+/* Notification */
+
+
+/* Start order form  */
+
+.title1 {
+    padding-top: 0%;
+}
+
+.form-group form-material {
+    margin-top: 1em;
+}
+
+.get-price-button {
+    padding-left: 63px;
+    padding-bottom: 2px;
+}
+
+
+/* End order form  */
+
+.approve_row {
+    display: block;
+    text-align: center;
+}
+
+.approve_row h3 {
+    padding-bottom: 20px;
+}
+
+.on {
+    background-color: rgb(30, 136, 229);
+    border-color: rgb(30, 136, 229);
+    box-shadow: rgb(30, 136, 229) 0px 0px 0px 13px inset;
+    transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+}
+
+.loader-style {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100% !important;
+    z-index: 9999;
+    background-color: #01010182;
+    /* background: url(../img/BogusEmptyBrontosaurus-size_restricted.gif) center no-repeat #01010182; */
+}
+
+
+/* air way bill  */
+
+input.airway_bill {
+    background-color: #3f51b5;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    background-image: linear-gradient(#3f51b5, #073f8c);
+    border-radius: 2px;
+}
+
+
+/* end air way bill  */
+
+
+/* kyc edit */
+
+.hr-style {
+    border-bottom: 1px solid gray;
+}
+
+.panel-style {
+    padding-right: -55px;
+    padding-left: -55px;
+}
+
+.example img {
+    /* height: 200px; */
+    width: 60%;
+
+    /* border: 4px solid #474a4e;
+    padding: 5px; */
+}
+.example .kycdoc{
+    text-align: center;
+}
+
+button#cc_btn {
+    position: absolute;
+    right: 0px;
+    top: 25px;
+}
+
+button#other_doc_btn {
+    position: absolute;
+    right: 11px;
+    top: 7px;
+}
+
+.other_doc_inner {
+    position: relative;
+    padding-top: 21px;
+    padding-right: 27px;
+}
+
+button.remove_btn {
+    position: absolute;
+    right: 0px;
+    top: 5px;
+}
+
+.pincode_add {
+    margin-bottom: 48px;
+}
+
+.add_1 {
+    margin-top: 0;
+    margin-bottom: 48px;
+}
+
+
+/* KYC edit css */
+
+.other_documnet_img {
+    height: 150px !important;
+    width: 150px !important;
+}
+
+.other_doc_btn button+button+button+button+button {
+    position: absolute;
+}
+
+div#other_doc_id_1 {
+    display: inline-flex;
+}
+
+button.other_doc_btn {
+    position: initial;
+    margin-top: -10px;
+    margin-right: -20px;
+}
+
+input#airway {
+    background-color: #3f51b5;
+    border: none;
+    color: #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input#importfile_btn {
+    background-color: #3f51b5;
+    border: none;
+    color: #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input#pre_bulk_btns {
+    background-color: #3f51b5;
+    border: none;
+    color: #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+/* pre bulk order css */
+
+h4.sample_of_excel {
+    border: 2px solid #3f51b5;
+    padding: 15px;
+}
+
+.amount {
+    display: none;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.export_excel_data {
+    top: -42px !important;
+    margin-left: 183px !important;
+    margin-bottom: -20px !important;
+}
+
+/* Dashboard */
+
+.welcome_lable {
+    padding: 35px;
+}
+
+.date_picker_btn {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.orer_li {
+    padding: 10px 15px;
+}
+
+.order_fulfill .panel-body {
+    padding: 15px;
+}
+
+.hidden_lable {
+    visibility: hidden;
+}
+
+.order_header_li {
+    padding: 10px 5px;
+}
+
+.order_header_drop {
+    width: 13em;
+}
+
+.total_carrier {
+    margin-right: 30px;
+}
+
+.div_circle {
+    background: cornsilk;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin-top: -0.5em;
+    padding-top: 4%;
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: center;
+    color: #344563;
+}
+
+.daily_dispach_li {
+    padding: 10px 5px;
+    background: #f5f6fa;
+    border-radius: 40%;
+    margin: 2px;
+    width: 50px;
+    height: 90px;
+}
+
+.ofd_dispach_li {
+    font-size: 17px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    text-align: center;
+    color: #344563;
+    top: 24px;
+    left: 16px;
+    width: 40px;
+}
+
+
+/* end Dashboard */
+
+
+/* / COD Remmitance  / */
+
+.card-block {
+    padding: 17px;
+}
+
+.card1 {
+    background-image: linear-gradient(to bottom, #1ea2fa, #0e6fff);
+    border-radius: 16px;
+}
+
+.card2 {
+    background-image: linear-gradient(to bottom, #1bbbb0, #0da8bf);
+    border-radius: 16px;
+}
+
+.card3 {
+    background-image: linear-gradient(to bottom, rgba(154, 94, 245, 0.98), #7a5cef);
+    border-radius: 16px;
+}
+
+.card4 {
+    background-image: linear-gradient(357deg, #b566cf 100%, #ce59d4 3%);
+    border-radius: 16px;
+}
+
+
+/* / COD Remmitance / */
+/* loader */
+.se-pre-con { position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; z-index: 9999; background: url(../img/BogusEmptyBrontosaurus-size_restricted.gif) center no-repeat #01010182;}
+/* loader end */

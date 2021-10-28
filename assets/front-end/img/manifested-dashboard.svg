@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="35" y1="5.684" x2="35" y2="64.134">
+			<stop offset="0" stop-color="#299efe"  />
+			<stop offset="1" stop-color="#2c72fd"  />
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #fcbe07 } 
+		.shp1 { fill: url(#grd1) } 
+		.shp2 { fill: #ffffff } 
+	</style>
+	<g id="Artboard 1 copy 11 1">
+		<path id="Vector" class="shp0" d="M58.54 23.82L58.54 24.42L39.05 24.42L39.05 5.68L39.42 5.68L58.54 23.82Z" />
+		<path id="Vector_2" class="shp1" d="M41.3 24.42C40.7 24.42 40.13 24.18 39.71 23.76C39.29 23.34 39.05 22.77 39.05 22.17L39.05 5.68L15.67 5.68C14.55 5.68 13.48 6.13 12.7 6.91C11.91 7.7 11.47 8.77 11.47 9.88L11.47 59.93C11.47 61.05 11.91 62.12 12.7 62.9C13.48 63.69 14.55 64.13 15.67 64.13L54.33 64.13C55.45 64.13 56.52 63.69 57.3 62.9C58.09 62.12 58.53 61.05 58.53 59.93L58.53 24.42L41.3 24.42Z" />
+		<path id="Vector_3" class="shp2" d="M29.4 23.8L18.38 23.8L18.38 25.2L29.4 25.2L29.4 23.8Z" />
+		<path id="Vector_4" class="shp2" d="M51.63 34.18L18.38 34.18L18.38 35.58L51.63 35.58L51.63 34.18Z" />
+		<path id="Vector_5" class="shp2" d="M51.8 44.57L18.55 44.57L18.55 45.97L51.8 45.97L51.8 44.57Z" />
+		<path id="Vector_6" class="shp2" d="M51.8 54.95L18.55 54.95L18.55 56.35L51.8 56.35L51.8 54.95Z" />
+	</g>
+</svg>
