@@ -16,6 +16,7 @@ class Order_list extends Auth_Controller
 		$this->load->model('View_order_model');
 		$this->load->model('Order_model');
 		ini_set('memory_limit', '-1');
+		$this->db->cache_on();
 
 		//Do your magic here
 	}
@@ -300,7 +301,7 @@ class Order_list extends Auth_Controller
 				return "<span>" . $d . "</span>";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a></div>";
+				return "<div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<div class='row'><a class='btn btn-danger' href='" . base_url('delete-created-order/' . $d) . "'>Cancel</a></div>";
@@ -318,6 +319,220 @@ class Order_list extends Auth_Controller
 			SSP::simple($_GET, $table, $primaryKey, $columns, $joinQuery, $where)
 		);
 	}
+
+	/**
+	 * OFP Order Table
+	 */
+	public function ofp_order_list()
+	{
+		$this->data['order_count'] = $this->get_order_count();
+		// dd($this->data);
+		$this->loadview('ofp_order_list', $this->data);
+	}
+
+	public function ofp_order_table()
+	{
+		$columns = array();
+		$table = 'forward_order_master';
+		$primaryKey = 'id';
+		if ($this->session->userdata('userType') == '1') {
+			$where = "os.order_status_id = '2' AND fom.is_pre_awb = '0' AND fom.is_delete='0'";
+		} else {
+			$where = "os.order_status_id = '2' AND fom.is_pre_awb = '0' AND fom.is_delete='0' AND fom.sender_id='" . $this->session->userdata('userId') . "'";
+		}
+
+		$joinQuery = ' FROM ' . $table . ' fom INNER JOIN sender_master as sm ON sm.id=fom.sender_id INNER JOIN logistic_master as lm ON lm.id=fom.logistic_id INNER JOIN receiver_address as ra ON ra.id=fom.deliver_address_id LEFT JOIN order_airwaybill_detail as owd ON owd.order_id = fom.id LEFT JOIN order_status as os ON os.order_status_id = owd.order_status_id INNER JOIN logistic_master as lom ON fom.logistic_id = lom.id';
+
+		$columns[0] = array('db' => 'fom.id', 'dt' => 0, 'field' => 'id', 'formatter' => function ($d, $row) {
+			return '<input type="checkbox" class="select-item" name="id[]" value="' . $d . '">';
+		});
+		$columns[1] = array('db' => 'fom.order_no', 'dt' => 1, 'field' => 'order_no');
+		$columns[2] = array('db' => 'fom.customer_order_no', 'dt' => 2, 'field' => 'customer_order_no');
+		$columns[3] = array('db' => 'fom.awb_number', 'dt' => 3, 'field' => 'awb_number');
+		$columns[4] = array('db' => 'lm.logistic_name', 'dt' => 4, 'field' => 'logistic_name', 'formatter' => function ($d, $row) {
+			return "<span>" . $d . "</span>";
+		});
+
+		$columns[5] = array('db' => 'ra.name', 'dt' => 5, 'field' => 'reciver_name', 'as' => 'reciver_name', 'formatter' => function ($d, $row) {
+			return "<span>" . $d . "</span>";
+		});
+		$columns[6] = array('db' => 'ra.mobile_no', 'dt' => 6, 'field' => 'mobile_no', 'formatter' => function ($d, $row) {
+			return '<span>' . $d . '</span>';
+		});
+		$columns[7] = array('db' => 'fom.order_type', 'dt' => 7, 'field' => 'order_type', 'formatter' => function ($d, $row) {
+			switch ($d) {
+				case '0':
+					return "Prepaid";
+					break;
+				case '1':
+					return "COD";
+					break;
+				default:
+					return "";
+					break;
+			}
+		});
+		$columns[8] = array('db' => 'fom.created_date', 'dt' => 8, 'field' => 'created_date', 'formatter' => function ($d, $row) {
+			return date('d-m-Y H:i:s', strtotime($d));
+		});
+		$columns[9] = array(
+			'db' => '(SELECT max(otd.scan_date_time) as detail_create_date FROM order_tracking_detail as otd WHERE otd.order_id=fom.id) as detail_create_date', 'dt' => 9, 'field' => 'detail_create_date', 'formatter' => function ($d, $row) {
+				if ($d != "") {
+					return date("d-m-Y", strtotime($d));
+				} else {
+					return "";
+				}
+			}
+		);
+		$columns[10] = array(
+			'db' => '(SELECT otd.scan as latest_scan FROM order_tracking_detail as otd WHERE otd.order_id=fom.id ORDER BY scan_date_time DESC LIMIT 1) as latest_scan', 'dt' => 10, 'field' => 'latest_scan', 'formatter' => function ($d, $row) {
+				if ($d != "") {
+					return $d;
+				} else {
+					return "";
+				}
+			}
+		);
+		$columns[11] = array(
+			'db' => 'os.status_name', 'dt' => 11, 'field' => 'status_name'
+		);
+
+		if ($this->session->userdata('userType') == '1') {
+
+
+			$columns[12] = array('db' => 'sm.email', 'dt' => 12, 'field' => 'email', 'formatter' => function ($d, $row) {
+				return "<span>" . $d . "</span>";
+			});
+
+			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#intransit_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a> </div>";
+			});
+			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;<a class='btn btn-danger btn-sm' href='" . base_url('delete-created-order/' . $d) . "'>Cancel</a></div>
+            ";
+			});
+		} else {
+			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-target='#intransit_order_details' data-id='$row[0]' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
+			});
+			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;<a class='btn btn-danger btn-sm' href='" . base_url('delete-created-order/' . $d) . "'>Cancel</a></div>
+            ";
+			});
+		}
+
+		echo json_encode(
+			SSP::simple($_GET, $table, $primaryKey, $columns, $joinQuery, $where)
+		);
+	}
+
+	/**
+	 * OFP Order Table
+	 */
+	public function notpicked_order_list()
+	{
+		$this->data['order_count'] = $this->get_order_count();
+		$this->loadview('notpicked_order_list', $this->data);
+	}
+
+	public function notpicked_order_table()
+	{
+		$columns = array();
+		$table = 'forward_order_master';
+		$primaryKey = 'id';
+		if ($this->session->userdata('userType') == '1') {
+			$where = "os.order_status_id = '8' AND fom.is_pre_awb = '0' AND fom.is_delete='0'";
+		} else {
+			$where = "os.order_status_id = '8' AND fom.is_pre_awb = '0' AND fom.is_delete='0' AND fom.sender_id='" . $this->session->userdata('userId') . "'";
+		}
+
+		$joinQuery = ' FROM ' . $table . ' fom INNER JOIN sender_master as sm ON sm.id=fom.sender_id INNER JOIN logistic_master as lm ON lm.id=fom.logistic_id INNER JOIN receiver_address as ra ON ra.id=fom.deliver_address_id LEFT JOIN order_airwaybill_detail as owd ON owd.order_id = fom.id LEFT JOIN order_status as os ON os.order_status_id = owd.order_status_id INNER JOIN logistic_master as lom ON fom.logistic_id = lom.id';
+
+		$columns[0] = array('db' => 'fom.id', 'dt' => 0, 'field' => 'id', 'formatter' => function ($d, $row) {
+			return '<input type="checkbox" class="select-item" name="id[]" value="' . $d . '">';
+		});
+		$columns[1] = array('db' => 'fom.order_no', 'dt' => 1, 'field' => 'order_no');
+		$columns[2] = array('db' => 'fom.customer_order_no', 'dt' => 2, 'field' => 'customer_order_no');
+		$columns[3] = array('db' => 'fom.awb_number', 'dt' => 3, 'field' => 'awb_number');
+		$columns[4] = array('db' => 'lm.logistic_name', 'dt' => 4, 'field' => 'logistic_name', 'formatter' => function ($d, $row) {
+			return "<span>" . $d . "</span>";
+		});
+
+		$columns[5] = array('db' => 'ra.name', 'dt' => 5, 'field' => 'reciver_name', 'as' => 'reciver_name', 'formatter' => function ($d, $row) {
+			return "<span>" . $d . "</span>";
+		});
+		$columns[6] = array('db' => 'ra.mobile_no', 'dt' => 6, 'field' => 'mobile_no', 'formatter' => function ($d, $row) {
+			return '<span>' . $d . '</span>';
+		});
+		$columns[7] = array('db' => 'fom.order_type', 'dt' => 7, 'field' => 'order_type', 'formatter' => function ($d, $row) {
+			switch ($d) {
+				case '0':
+					return "Prepaid";
+					break;
+				case '1':
+					return "COD";
+					break;
+				default:
+					return "";
+					break;
+			}
+		});
+		$columns[8] = array('db' => 'fom.created_date', 'dt' => 8, 'field' => 'created_date', 'formatter' => function ($d, $row) {
+			return date('d-m-Y H:i:s', strtotime($d));
+		});
+		$columns[9] = array(
+			'db' => '(SELECT max(otd.scan_date_time) as detail_create_date FROM order_tracking_detail as otd WHERE otd.order_id=fom.id) as detail_create_date', 'dt' => 9, 'field' => 'detail_create_date', 'formatter' => function ($d, $row) {
+				if ($d != "") {
+					return date("d-m-Y", strtotime($d));
+				} else {
+					return "";
+				}
+			}
+		);
+		$columns[10] = array(
+			'db' => '(SELECT otd.scan as latest_scan FROM order_tracking_detail as otd WHERE otd.order_id=fom.id ORDER BY scan_date_time DESC LIMIT 1) as latest_scan', 'dt' => 10, 'field' => 'latest_scan', 'formatter' => function ($d, $row) {
+				if ($d != "") {
+					return $d;
+				} else {
+					return "";
+				}
+			}
+		);
+		$columns[11] = array(
+			'db' => 'os.status_name', 'dt' => 11, 'field' => 'status_name'
+		);
+
+		if ($this->session->userdata('userType') == '1') {
+
+
+			$columns[12] = array('db' => 'sm.email', 'dt' => 12, 'field' => 'email', 'formatter' => function ($d, $row) {
+				return "<span>" . $d . "</span>";
+			});
+
+			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#intransit_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a> </div>";
+			});
+			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;<a class='btn btn-danger btn-sm' href='" . base_url('delete-created-order/' . $d) . "'>Cancel</a></div>
+            ";
+			});
+		} else {
+			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-target='#intransit_order_details' data-id='$row[0]' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
+			});
+			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;<a class='btn btn-danger btn-sm' href='" . base_url('delete-created-order/' . $d) . "'>Cancel</a></div>
+            ";
+			});
+		}
+
+		echo json_encode(
+			SSP::simple($_GET, $table, $primaryKey, $columns, $joinQuery, $where)
+		);
+	}
+
+
+
 
 	/**
 	 * Intransit Order Table
@@ -408,7 +623,7 @@ class Order_list extends Auth_Controller
 			});
 
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#intransit_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button>";
+				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#intransit_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a> </div>";
 			});
 			$columns[15] = array('db' => 'fom.id', 'dt' => 15, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button></div>
@@ -416,7 +631,7 @@ class Order_list extends Auth_Controller
 			});
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-target='#intransit_order_details' data-id='$row[0]' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button>";
+				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-target='#intransit_order_details' data-id='$row[0]' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button></div>
@@ -428,6 +643,8 @@ class Order_list extends Auth_Controller
 			SSP::simple($_GET, $table, $primaryKey, $columns, $joinQuery, $where)
 		);
 	}
+
+
 
 	/**
 	 * OFD Order Table
@@ -517,7 +734,7 @@ class Order_list extends Auth_Controller
 			});
 
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn'  data-details='order_details' data-target='#ofd_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button>
+				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn'  data-details='order_details' data-target='#ofd_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>
                 ";
 			});
 			$columns[15] = array('db' => 'fom.id', 'dt' => 15, 'field' => 'id', 'formatter' => function ($d, $row) {
@@ -525,7 +742,7 @@ class Order_list extends Auth_Controller
 			});
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-details='order_details' data-target='#ofd_order_details' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button>
+				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-details='order_details' data-target='#ofd_order_details' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>
                 ";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
@@ -624,7 +841,7 @@ class Order_list extends Auth_Controller
 
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#ndr_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' style='margin-bottom:5px;'>Order Detail</button></div>
-                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='ndr_tab' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
+                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='ndr_tab' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[15] = array('db' => 'fom.id', 'dt' => 15, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#ndr_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
@@ -632,7 +849,7 @@ class Order_list extends Auth_Controller
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#ndr_order_details' data-details='order_details' class='btn btn-primary btn-xs waves-effect waves-classic' style='margin-bottom:5px;'>Order Detail</button> </div>
-                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-ndr='ndr_tab' data-id='$row[0]' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
+                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-ndr='ndr_tab' data-id='$row[0]' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#ndr_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
@@ -728,12 +945,12 @@ class Order_list extends Auth_Controller
 				return "<button type='button' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-details='order_details' data-target='#delivered_order_details' attr-btntype='order_tracking' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
 			});
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#delivered_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#delivered_order_details' class='btn btn-primary btn- waves-effect waves-classic' style='margin-top:-10px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a>";
 			});
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-details='order_details' data-target='#delivered_order_details' attr-btntype='order_tracking' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button>
-                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
+				return "<button type='button' data-toggle='modal' id='order_detail_btn' data-details='order_details' data-target='#delivered_order_details' attr-btntype='order_tracking' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-top:-10px;'>Order Details</button>
+                <button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a>";
 			});
 
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
@@ -833,14 +1050,14 @@ class Order_list extends Auth_Controller
 			});
 
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button 'data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-info='intransit_order' data-target='#rto_intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' id='order_ndr_comment' data-ndr='other_tabs' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
+				return "<button type='button 'data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-info='intransit_order' data-target='#rto_intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' id='order_ndr_comment' data-ndr='other_tabs' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[15] = array('db' => 'fom.id', 'dt' => 15, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
 			});
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-details='order_details' data-toggle='modal' data-info='intransit_order' data-info='intransit_order' id='order_detail_btn' data-target='#rto_intransit_order_details' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-info='intransit_order' data-info='intransit_order' id='order_detail_btn' data-target='#rto_intransit_order_details' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button><div class=''><a class='single_order_print_button' data-id='" . $d . "'><i class='fa fa-print' aria-hidden='true' style='font-size:30px;'></i></a>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a></div>";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_intransit_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
@@ -933,14 +1150,14 @@ class Order_list extends Auth_Controller
 				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_detail_btn' data-target='#rto_delivered_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
 			});
 			$columns[14] = array('db' => 'fom.id', 'dt' => 14, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_delivered_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_delivered_order_details' class='btn btn-primary btn-sm waves-effect waves-classic' style='margin-top:-10px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>&nbsp;&nbsp;&nbsp;<a style='color:#333333;'data-toggle='tooltip' title='Print Invoice' href='" . base_url("invoice/" . $row[0]) . "' target='_blank' title='View Invoice'><i class='fa fa-file-text' style='font-size:30px;'></i></a>";
 			});
 		} else {
 			$columns[12] = array('db' => 'fom.id', 'dt' => 12, 'field' => 'id', 'formatter' => function ($d, $row) {
 				return "<button type='button' data-details='order_details' data-toggle='modal' id='order_detail_btn' data-target='#rto_delivered_order_details' data-id='$row[0]' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'>Order Details</button><button type='button' data-toggle='modal' data-target='#ndr_order_comment' data-id='$row[0]' data-ndr='other_tabs' id='order_ndr_comment' class='btn btn-primary btn-xs waves-effect waves-classic'style='margin-top: 5px;'>NDR Comment</button>";
 			});
 			$columns[13] = array('db' => 'fom.id', 'dt' => 13, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_delivered_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-bottom:5px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
+				return "<button type='button' data-details='order_details' data-toggle='modal' data-id='$row[0]' id='order_tracking_btn' data-target='#rto_delivered_order_details' class='btn btn-primary btn-xs waves-effect waves-classic' stysle='margin-top:-10px;'><i class='fa fa-map-marker' aria-hidden='true'></i></button>";
 			});
 		}
 
@@ -1014,7 +1231,7 @@ class Order_list extends Auth_Controller
 			});
 		} else {
 			$columns[10] = array('db' => 'fom.id', 'dt' => 10, 'field' => 'id', 'formatter' => function ($d, $row) {
-				return "<a class='btn btn-danger' href='" . base_url('delete-error-order/' . $d) . "'>Delete</a>";
+				return "<a class='btn btn-danger' href='" . base_url('delete-error-order/' . $d) . "'>Delete</a><a class='btn btn-primary  waves-effect waves-classic' style='margin: 2px ;'  href='" . base_url('reorder-error-order/' . $d) . "'>Reorder</a>";
 			});
 		}
 
@@ -1113,18 +1330,20 @@ class Order_list extends Auth_Controller
 	//get order list count
 	public function get_order_count()
 	{
-		$this->benchmark->mark('code_start');
+		// $this->benchmark->mark('code_start');
 		// $data['get_all_order_list'] = $this->View_order_model->get_count('');
-		$this->benchmark->mark('code_end');
-		$this->benchmark->elapsed_time('code_start', 'code_end') . "<br>";
+		// $this->benchmark->mark('code_end');
+		// $this->benchmark->elapsed_time('code_start', 'code_end') . "<br>";
 
-		$this->benchmark->mark('code_start');
+		// $this->benchmark->mark('code_start');
 		// $data['get_all_order_list'] = $this->db->select('id')->from('forward_order_master')->where('is_reverse', '0')->where('is_cancelled', '0')->where('is_delete', '0')->where('is_pre_awb', '0')->count_all_results();
-		$this->benchmark->mark('code_end');
-		$this->benchmark->elapsed_time('code_start', 'code_end') . "<br>";
+		// $this->benchmark->mark('code_end');
+		// $this->benchmark->elapsed_time('code_start', 'code_end') . "<br>";
 		// dd($data);
-		$status = array('1', '3', '5', '6', '18');
+		$status = array('1', '2', '3', '5', '6', '8', '18');
 		$get_all_count = $this->View_order_model->get_count($status);
+		// lq();
+		// dd($get_all_count);
 		$data['get_created_order_list'] = $data['get_intransit_order_list'] = $data['get_ofd_order_list'] = $data['get_ndr_order_list'] = $data['get_delivered_order_list'] = '0';
 		// dd($get_all_count);
 		if (!empty($get_all_count)) {
@@ -1132,6 +1351,9 @@ class Order_list extends Auth_Controller
 				switch ($count['order_status_id']) {
 					case '1':
 						$data['get_created_order_list'] = $count['numrows'];
+						break;
+					case '2':
+						$data['get_ofp_order_list'] = $count['numrows'];
 						break;
 					case '3':
 						$data['get_intransit_order_list'] = $count['numrows'];
@@ -1142,6 +1364,9 @@ class Order_list extends Auth_Controller
 
 					case '6':
 						$data['get_delivered_order_list'] = $count['numrows'];
+						break;
+					case '8':
+						$data['get_notpicked_order_list'] = $count['numrows'];
 						break;
 
 					case '18':
@@ -1154,7 +1379,7 @@ class Order_list extends Auth_Controller
 				}
 			}
 		}
-		$data['get_all_order_list'] = $this->View_order_model->get_intransit_order_count('1,3,5,6,18,9,10,11,12,13,14');
+		$data['get_all_order_list'] = $this->View_order_model->get_intransit_order_count('1,2,3,5,6,8,18,9,10,11,12,13,14');
 		$data['get_rtointransit_order_list'] = $this->View_order_model->get_intransit_order_count('9,10,11,12');
 		$data['get_rtodelivered_order_list '] = $this->View_order_model->get_intransit_order_count('13,14');
 		$data['get_onprocess_order_list'] = $this->View_order_model->get_onprocess_data($this->session->userdata('userId'), $this->session->userdata('userType'));

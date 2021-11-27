@@ -136,7 +136,7 @@
 	<!-- common validation form admin -->
 	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/admin-form-validation.js?v=1.8"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/kyc_validation.js?v=1.8"></script>
-	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/order-admin.js?v=1.8"></script>
+	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/order-admin.js?v=2.8"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/metrocity-validation.js?v=1.5"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/import_pincode.js?v=1.6"></script>
 	<script type="text/javascript" src="<?= base_url(); ?>assets/custom/admin-js/reports.js"></script>

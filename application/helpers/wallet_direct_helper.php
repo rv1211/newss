@@ -20,6 +20,7 @@ class wallet_direct
 		$log_data['process_start_time'] = date("d-m-y H:i:s");
 		$orderdata = $CI->Common_model->getSingle_data('*', $temp_table_name, array('id' => $order_id));
 		$log_data['awb_number'] = $awbNumber;
+		$log_data['order_data'] = $orderdata;
 		$log_data['order_no'] = $order_no;
 		$log_data['order_query'] = $CI->db->last_query();
 		$logistic = $CI->Common_model->getSingle_data('api_name', 'logistic_master', array('id' => $orderdata['logistic_id']));
@@ -189,6 +190,7 @@ class wallet_direct
 		$orderdata['customer_order_no'] = $orderdata['customer_order_no'] == '' ? $order_no : $orderdata['customer_order_no'];
 		$orderdata['order_no'] = $orderdata['order_no'] == '' ? $order_no : $orderdata['order_no'];
 		$orderdata['awb_number'] = $orderdata['awb_number'] == '' ? $awbNumber : $orderdata['awb_number'];
+
 
 		$inser_order = $CI->Common_model->insert($orderdata, $order_table);
 		$log_data['move_order_query'] = $CI->db->last_query();

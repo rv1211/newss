@@ -11,12 +11,12 @@
 	<style>
 		body {
 			font-family: Calibri !important;
-			font-size: 21px;
+			font-size: 20px;
 		}
 
 		body h3,
 		body table {
-			font-size: 20px;
+			font-size: 19px;
 		}
 
 		table {
@@ -126,7 +126,9 @@
 				<td colspan="3">
 					<h4>Product Name : <?php echo $order_info['product_name']; ?><br>
 						Quantity : <?php echo $order_info['product_quantity']; ?><br>
-						Sku : <?php echo $order_info['product_sku']; ?>
+						Sku : <?php echo $order_info['product_sku']; ?><br>
+						Dimention : <?php echo round($order_info['length']); ?> X <?= round($order_info['width']); ?> X <?= round($order_info['height']); ?> <br>
+						Weight : <?php echo $order_info['physical_weight']; ?>
 					</h4>
 				</td>
 			</tr>
@@ -135,13 +137,7 @@
 					<b>Order No.- <?php echo $order_info['customer_order_no']; ?> </b>
 				</td>
 			</tr>
-			<tr>
-				<td class="td" colspan="3">
-					Reseller Info :- <br>
-					<b><?php echo @$order_info['packing_slip_warehouse_name'] ?></b>
-				</td>
 
-			</tr>
 			<tr>
 				<td colspan="2"> Buyer Details :<b> <br>
 						<?php echo $order_info['deliver_name'] ?>(<?php echo $order_info['deliver_mobile_no']; ?>)</b><br>
@@ -169,7 +165,7 @@
 					$file_data = file_get_contents($path);
 					$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
 					?>
-					<img src="<?php echo $base64_img; ?>" width="400" height="100">
+					<img src="<?php echo $base64_img; ?>" width="400" height="80">
 				</td>
 			</tr>
 			<tr>
@@ -185,7 +181,7 @@
 						$file_data = file_get_contents($path);
 						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
 						?>
-						<img src="<?php echo $base64_img; ?>" width="400" height="100">
+						<img src="<?php echo $base64_img; ?>" width="400" height="120">
 					<?php endif;
 					?>
 				</td>
@@ -196,6 +192,14 @@
 						<?php echo $order_info['uddan_barcode_text']; ?>
 					<?php endif; ?></td>
 			</tr>
+			<?php if (!empty($order_info['packing_slip_warehouse_name'])) : ?>
+				<tr>
+					<td class="td" colspan="3">
+						Reseller Info :- <br>
+						<b><?php echo @$order_info['packing_slip_warehouse_name'] ?></b>
+					</td>
+				</tr>
+			<?php endif; ?>
 		</table>
 	</div>
 </body>

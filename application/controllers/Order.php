@@ -32,6 +32,7 @@ class Order extends Auth_Controller
 	public function index()
 	{
 		// dd($_POST);
+		$this->db->cache_delete_all();
 		$this->data['pickup_address'] = $this->Create_singleorder_awb->get_pickup_address($this->session->userdata('userId'));
 		if ($this->input->post()) {
 			$validation = [
@@ -123,6 +124,7 @@ class Order extends Auth_Controller
 						$insert_tmp_single_order['order_type'] = '0';
 					}
 					$insert_tmp_single_order['total_shipping_amount'] = $this->input->post('base_ship');
+					$insert_tmp_single_order['zone'] = @$this->input->post('zone');
 					$insert_tmp_single_order['awb_number'] = "";
 					$insert_tmp_single_order['logistic_id'] = $this->input->post('logistic_id');
 
@@ -133,6 +135,7 @@ class Order extends Auth_Controller
 					$insert_tmp_single_order['sgst_amount'] = $this->input->post('sgst');
 					$insert_tmp_single_order['cgst_amount'] = $this->input->post('cgst');
 					$insert_tmp_single_order['igst_amount'] = $this->input->post('igst');
+
 					$insert_tmp_single_order['is_return_address_same_as_pickup'] = $this->input->post('is_return_address_same_as_pickup');
 
 					$insert_tmp_single_order['created_date'] = date('Y-m-d H:i:s');
@@ -143,6 +146,7 @@ class Order extends Auth_Controller
 					$insert_tmp_order = $this->Common_model->insert($insert_tmp_single_order, 'temp_forward_order_master');
 
 					$total_charge = $this->input->post('total');
+
 					if ($insert_tmp_order) {
 						$update_data['order_no'] = 'SSL' . $userId . '-' . $insert_tmp_order . '-' . rand(001, 999) . 'S';
 						$updateRsult = $this->Common_model->update($update_data, 'temp_forward_order_master', array('id' => $insert_tmp_order));

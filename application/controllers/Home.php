@@ -987,9 +987,9 @@ class Home extends CI_Controller
 		$this->load->helper('get_shiping_price');
 		$message = "";
 		file_put_contents($this->config->item("FILE_PATH") . '/upload/log_error/home_page_get_price/' . date("d-m-Y") . '_log.txt', "----------------------------------START HOME PAGE CALCULATION-------------------------------------\n", FILE_APPEND);
-		$log_data1['pickup_pincode'] = $pincode = $this->input->post('pickup_pincode');
-		$log_data1['receive_pincode'] = $receive_pincode = $this->input->post('receive_pincode');
-		$log_data1['physical_weight_in_kg'] = $physical_weight = $this->input->post('physical_weight');
+		$log_data1['pickup_pincode'] = $pincode = trim($this->input->post('pickup_pincode'));
+		$log_data1['receive_pincode'] = $receive_pincode = trim($this->input->post('receive_pincode'));
+		$log_data1['physical_weight_in_kg'] = $physical_weight = trim($this->input->post('physical_weight'));
 		$phy_weight = $physical_weight * 1;
 
 		$total_shipping_price = get_shiping_price('1', NULL, $pincode, $receive_pincode, '0', '0', $phy_weight, $phy_weight, 0, 0, 18);

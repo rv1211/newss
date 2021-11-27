@@ -79,6 +79,7 @@ class Weight_missmatch extends Auth_Controller
 					continue;
 				}
 				$get_all_data = $this->Weight_missmatch_model->get_order_data($singlerecord['A']);
+				// lq();
 				$shipment_type = "";
 				if (!empty($get_all_data)) {
 					$get_all_data[0]['actual_weight'] = $singlerecord['B'];
@@ -104,7 +105,12 @@ class Weight_missmatch extends Auth_Controller
 			}
 			// exit();
 
-			// dd($final_array);
+			// dd($get_all_data[0]['logistic_id']);
+
+			// if (empty($$get_all_data[0]['logistic_id'])) {
+			// 	$this->session->set_flashdata('error', 'Uploaded file Has Logistic Error');
+			// 	redirect('weight-missmatch');
+			// }
 
 			//Histroy Entry	
 			$id = $this->Weight_missmatch_model->insert_history_index($this->session->userdata('userId'), $get_all_data[0]['logistic_id']);

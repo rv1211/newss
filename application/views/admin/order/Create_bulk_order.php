@@ -167,7 +167,7 @@ class Create_bulk_order extends Auth_Controller
 								$inserdata3['sgst_amount'] = $get_total_amount['data'][0]['tax']['SGST'];
 								$inserdata3['cgst_amount'] = $get_total_amount['data'][0]['tax']['CGST'];
 								$inserdata3['igst_amount'] = $get_total_amount['data'][0]['tax']['IGST'];
-								$inserdata3['zone'] = @$get_total_amount['data'][0]['zone'];
+								$inserdata3['zone'] = $get_total_amount['data'][0]['zone'];
 								$inserdata1['cod_charge'] = $get_total_amount['data'][0]['cod_ammount'];
 							} else {
 								$error = $get_total_amount['message'];

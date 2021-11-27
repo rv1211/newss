@@ -61,7 +61,7 @@ top: -5px !important;
 								<div class="tab-content pt-20">
 
 									<div class="tab-pane active" id="created_tab" role="tabpanel">
-										<table class="table table-striped table-borderd" id="errororder_list">
+										<table class="table table-striped table-borderd table-responsive" id="errororder_list">
 											<thead>
 												<tr>
 													<th class="noExport"><input type="checkbox" class="all_manifested_order" id="select_all" name="select_all" value="1"></th>

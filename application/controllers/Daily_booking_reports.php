@@ -492,7 +492,7 @@ class Daily_booking_reports extends Auth_Controller
 						unlink($findfile);
 					}
 				}
-				$searchVal = array('Order ID',  'Airwaybill Number', 'Shipment Type', 'Customer Name', 'Customer Mobile No', 'Customer Address', 'City', 'Pincode', 'State', 'Order Type', 'COD Amount', 'Courier Company', 'Order Status', 'Product Name', 'Product Value', 'Product Quantity', 'Physical Weight', 'Shipping Charge', 'Order Create Date', 'Order Last status Date', 'User', 'User Email', 'Pickup Username', 'Pickup Contact No', 'Pickup Address', 'Pickup Warehouse', 'Pickup Pincode', 'Pickup City', 'Pickup State');
+				$searchVal = array('Order ID',  'Airwaybill Number', 'Shipment Type', 'Zone', 'Customer Name', 'Customer Mobile No', 'Customer Address', 'City', 'Pincode', 'State', 'Order Type', 'COD Amount', 'Courier Company', 'Order Status', 'Product Name', 'Product Value', 'Product Quantity', 'Physical Weight', 'Shipping Charge', 'Order Create Date', 'Order Last status Date', 'User', 'User Email', 'Pickup Username', 'Pickup Contact No', 'Pickup Address', 'Pickup Warehouse', 'Pickup Pincode', 'Pickup City', 'Pickup State');
 				// $searchVal = array('awb');
 				$fileName = 'all_order_report_' . date("d-m-Y-H-i-s") . '.xlsx';
 				// load excel library
@@ -516,6 +516,7 @@ class Daily_booking_reports extends Auth_Controller
 					$ary[$i]['Order ID'] = $single_data['order_no'];
 					$ary[$i]['Airwaybill Number'] = $single_data['awb_number'];
 					$ary[$i]['Shipment Type'] = $single_data['shipment_type'];
+					$ary[$i]['Zone'] = $single_data['zone'];
 					$ary[$i]['Customer Name'] = $single_data['customer_name'];
 					$ary[$i]['Customer Mobile No'] = $single_data['customer_mobile_no'];
 					$ary[$i]['Customer Address'] = $single_data['reciver_address'];

@@ -702,6 +702,7 @@ $(function () {
 			var total = tr.find('span.subtotal').html();
 			var logistic_id = tr.find('span.logistic_id').html();
 			var codamount = $('#cod_amount').val();
+			var zone = tr.find('span.zone').html();
 			// console.log(codamount);
 			$.ajax({
 				type: "POST",
@@ -730,6 +731,7 @@ $(function () {
 						$('#logistic_id').val(logistic_id);
 						// console.log(codamount);
 						$('#cod_charge').val(codamount);
+						$('#zone').val(zone);
 						$('.totalsummary').html(shipCharge.toFixed(2));
 						$("#createorder").removeAttr("disabled");
 					} else {
@@ -748,6 +750,10 @@ $(function () {
 
 	});
 
+
+	$(document).delegate("#createorder", "click", function () {
+		$("#createorder").attr("disabled");
+	});
 	//rate calculation ajax
 
 	$(document).delegate('.get-price-simple-order-rate', 'click', function () {

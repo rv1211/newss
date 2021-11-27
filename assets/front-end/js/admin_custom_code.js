@@ -436,6 +436,7 @@ $(function () {
 						$('.total_gst').html('Rs.' + gst_charge.toFixed(2));
 						$('.total_rate').html('Rs.' + amount.toFixed(2));
 						$('#create_order_button').prop('disabled', false);
+						$("#zone").val();
 					} else {
 						$("#result_error_message").fadeIn("slow").html(data.error);
 						setTimeout(function () {

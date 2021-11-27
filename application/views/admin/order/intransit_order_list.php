@@ -8,7 +8,7 @@
 	}
 
 	.assign_label_choose_div.show {
-		height: 392px !important;
+		height: 185px !important;
 		overflow-y: scroll !important;
 	}
 
@@ -75,7 +75,7 @@
 					</button>
 					<?php if ($this->session->userdata('userType') == '1') { ?>
 						<div class="dropdown-menu assign_label_choose_div" aria-labelledby="exampleSizingDropdown2" role="menu" x-placement="top-start" style="position: absolute; left: 0px; will-change: transform; transform: translate3d(0px, -204px, 0px); top: 0px;">
-							<div class="scroller" style="display:flex">
+							<!-- <div class="scroller" style="display:flex">
 								<div class="radio-btn">
 									<input type="radio" name="radio_btn" checked="" value="1" data-name="first">
 								</div>
@@ -113,7 +113,7 @@
 									</a>
 								</div>
 							</div>
-							<hr>
+							<hr> -->
 							<!-- <div class="scroller" style="display:flex">
                                 <div class="radio-btn">
                                     <input type="radio" name="radio_btn" value="4" data-name="forth">
@@ -130,7 +130,7 @@
                             </div> -->
 							<div class="scroller" style="display:flex">
 								<div class="radio-btn">
-									<input type="radio" name="radio_btn" value="5" data-name="fifth">
+									<input type="radio" name="radio_btn" checked value="5" data-name="fifth">
 								</div>
 
 								<div class="ifram">
@@ -140,7 +140,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="scroller" style="display:flex">
+							<!-- <div class="scroller" style="display:flex">
 								<div class="radio-btn">
 									<input type="radio" name="radio_btn" value="6" data-name="sixth">
 								</div>
@@ -172,7 +172,7 @@
 										</iframe>
 									</a>
 								</div>
-							</div>
+							</div> -->
 							<!-- <div class="scroller" style="display:flex">
                                 <div class="radio-btn">
                                     <input type="radio" name="radio_btn" value="9" data-name="nineth">
@@ -180,24 +180,26 @@
                                 <div class="ifram">
                                     <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
                                         <iframe
-                                            src="<?php echo base_url() . "uploads/sample_label_pdf/sample_9.pdf"; ?>"
+                                            src="<?php //echo base_url() . "uploads/sample_label_pdf/sample_9.pdf"; 
+													?>"
                                             frameborder="0">
                                         </iframe>
                                     </a>
                                 </div>
                             </div> -->
-							<div class="scroller" style="display:flex">
+							<!-- <div class="scroller" style="display:flex">
 								<div class="radio-btn">
 									<input type="radio" name="radio_btn" value="0" data-name="tenth">
 								</div>
 								<div class="ifram">
 									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-										<iframe src="<?php echo base_url() . "uploads/sample_label_pdf/sample_0.pdf"; ?>" frameborder="0">
+										<iframe src="<?php // echo base_url() . "uploads/sample_label_pdf/sample_0.pdf"; 
+														?>" frameborder="0">
 										</iframe>
 									</a>
 								</div>
-							</div>
-							<hr>
+							</div> -->
+
 						</div><?php } else { ?>
 						<div class="dropdown-menu assign_label_choose_div" aria-labelledby="exampleSizingDropdown2" role="menu" x-placement="top-start" style="position: absolute; left: 0px; will-change: transform; transform: translate3d(0px, -5px, 0px);">
 							<?php if ($assign_labels) {
@@ -218,14 +220,13 @@
 									<hr />
 								<?php }
 								} else { ?>
-
 								<b>No lable found</b>
 							<?php } ?>
 						</div>
 					<?php } ?>
-					<button type=" button print_btn" id="multi_print" class="btn btn-primary waves-effect waves-classic">Multiple Print</button>
+					<button type=" button print_btn" id="multi_print" class="btn btn-primary waves-effect waves-classic">Print Packing Slip</button>
 					<button type="button print_btn" id="multi_print_manifest" class="btn btn-primary waves-effect waves-classic waves-effect waves-classic">Print Multiple Manifest</button>
-					<button type="button" id="multiple_delete" class="btn btn-danger">Cancel Multiple</button>
+					<!-- <button type="button" id="multiple_delete" class="btn btn-danger">Cancel Multiple</button> -->
 				</div>
 			</div>
 			<div class="panel-body container-fluid">

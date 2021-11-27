@@ -162,7 +162,7 @@ $route['assign-lable'] = "Manage_customer/lable";
 $route['assign_label_user'] = "Manage_customer/label_assign";
 $route['assign_awb_list/(:num)'] = 'Assign_awb/get_awb_data/$1';
 
-
+$route['invoice/(:any)'] = "Invoice/genrate_pdf/$1";
 
 
 //webhook
@@ -304,8 +304,12 @@ $route['view-order'] = 'Order_list/index';
 $route['order-list'] = 'Order_list/order_list_table';
 $route['created-order-list'] = 'Order_list/created_order_table';
 $route['createdOrderList'] = 'Order_list/createdorder_list_view';
-$route['Intransit-Order-List'] = 'Order_list/intransit_order_list';
+$route['ofp-Order-List'] = 'Order_list/ofp_order_list';
+$route['ofpOrderList'] = 'Order_list/ofp_order_table';
+$route['notpicked-Order-List'] = 'Order_list/notpicked_order_list';
+$route['notpickedOrderList'] = 'Order_list/notpicked_order_table';
 $route['IntransitOrderList'] = 'Order_list/intransit_order_table';
+$route['Intransit-Order-List'] = 'Order_list/intransit_order_list';
 $route['ofd-Order-List'] = 'Order_list/ofd_order_list';
 $route['ofdOrderList'] = 'Order_list/ofd_order_table';
 $route['ndr-Order-List'] = 'Order_list/ndr_order_list';
@@ -454,6 +458,13 @@ $route['weight-missmatch'] = 'Weight_missmatch/index';
 $route['import-weightmissmatch'] = 'Weight_missmatch/import_weight_exel';
 $route['weight-missmatch-list'] = "Weight_missmatch/weightmissmatch";
 $route['get_missmatch_data'] = "Weight_missmatch/get_missmatch_data";
+
+
+$route['clear-stuck'] = "Bug_fixer/clear_bulk";
+$route['bulk-cleared'] = "Bug_fixer/clear_bulk_stuck";
+
+//reorder_route
+$route['reorder-error-order/(:num)'] = 'Reorder/index/$1';
 
 $route['404_override'] = "";
 $route['translate_uri_dashes'] = false;

@@ -3,13 +3,8 @@
 		padding: 0.715rem 2.072rem;
 	}
 
-
 	.print_btn {
 		margin-right: 15px;
-	}
-
-	.order_nav {
-		padding: -6.285rem 12.072rem;
 	}
 
 	.assign_label_choose_div.show {
@@ -30,21 +25,35 @@
 		transform: scale(1.5);
 	}
 
+	.export_btn_create {
+		left: 155%;
+		height: 36px;
+		margin-top: -159px;
+	}
 
-	#order_ofd_filter {
+	/* .order_nav {
+		padding: -6.285rem 12.072rem;
+	} */
+
+	b {
+		font-weight: 1000;
+	}
+
+	#order_intransit_filter {
 		margin-top: -60px !important;
 	}
 
-	/* .export_btn_order_ofd {
-    left: 380%;
-    height: 40px;
-    margin-top: -163px;
-} */
 
-	/* .ofd_orders_export{
-    margin-left: 980px  !important;
-    		top: -5px !important;
-} */
+	/* .export_btn_order_intransit {
+		left: 380%;
+		height: 40px;
+		margin-top: -163px;
+	} */
+
+	/* .intransit_orders_export {
+		margin-left: 980px !important;
+		top: -5px !important;
+	} */
 </style>
 <div class="page">
 	<div class="page-header">
@@ -54,8 +63,9 @@
 			<li class="breadcrumb-item active">Orders</li>
 		</ol>
 	</div>
-	<div class="page-content ">
+	<div class="page-content">
 		<!-- Panel Basic -->
+
 		<div class="panel">
 			<div class="panel-heading">
 				<h3 class="panel-title"><span style="visibility: hidden;">sfs</span></h3>
@@ -220,7 +230,7 @@
 				</div>
 			</div>
 			<div class="panel-body container-fluid">
-				<div class="row row-lg" style="margin-top:20px;">
+				<div class="row row-lg">
 					<div class="col-xl-12">
 						<div class="form-group form-material">
 							<!-- <div class="btn-group">
@@ -234,17 +244,15 @@
 									<?php require APPPATH . 'views/admin/order/tab_list.php'; ?>
 								</ul>
 								<div class="tab-content pt-20">
-
-
-									<div class="tab-pane active" id="ofd_tab" role="tabpanel">
-										<table class="table table-striped table-borderd" id="order_ofd">
+									<div class="tab-pane active" id="ofp_tab" role="tabpanel">
+										<table class="table table-striped table-borderd" id="order_ofp">
 											<thead>
 												<tr>
 													<th class="noExport"><input type="checkbox" class="all_manifested_order" id="select_all" name="select_all" value="1"></th>
 													<th>Order ID</th>
 													<th>Order Number</th>
 													<th>Airwaybill Number</th>
-													<th>logistic Name</th>
+													<th>Logistic Name</th>
 													<th>Customer Name</th>
 													<th>Customer Number</th>
 													<th>Order Type</th>
@@ -253,9 +261,9 @@
 													<th>Last Remarks</th>
 													<th>Order Status</th>
 													<?php if ($this->session->userdata('userType') == '1') { ?>
-														<th>Intransit Days count</th>
 														<th>User</th>
 													<?php } ?>
+
 													<th class="noExport">Action</th>
 													<th class="noExport">Order Tracking</th>
 												</tr>
@@ -263,7 +271,6 @@
 											<tbody></tbody>
 										</table>
 									</div>
-
 
 								</div>
 							</div>
@@ -285,6 +292,5 @@
 			<div class="modal-body">
 			</div>
 		</div>
-
 	</div>
 </div>

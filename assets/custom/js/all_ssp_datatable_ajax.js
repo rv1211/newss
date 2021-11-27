@@ -670,6 +670,50 @@ $("#errororder_list").DataTable({
 
 });
 
+
+
+$("#order_ofp").DataTable({
+	"serverSide": true,
+	"pageLength": 100,
+	"lengthMenu": [
+		[100, 500, 1000, -1],
+		[100, 500, 1000, "All"]
+	],
+	"ajax": {
+		"url": hiddenURL + 'ofpOrderList',
+	},
+	"columnDefs": [{
+		"targets": [0, 9, 10, 12],
+		"orderable": false,
+		"searchable": false,
+	}],
+	"order": [
+		[8, "desc"]
+	],
+
+	"language": {
+		"infoFiltered": "",
+	},
+
+	dom: 'lBfrtip',
+	buttons: [{
+		extend: 'csv',
+		filename: 'OFP Order List',
+		text: 'Export',
+		className: 'btn btn-primary export_excel_data export_btn_order_intransit ',
+		exportOptions: {
+			//columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+			// columns: 'th:not(:last-child)'
+			columns: "thead th:not(.noExport)"
+		},
+
+	}]
+});
+
+
+
+
+
 /**
  * Intransit Order List
  */
@@ -918,6 +962,44 @@ $("#order_rto_delivered").DataTable({
 	}]
 });
 
+
+$("#order_notpicked").DataTable({
+	"serverSide": true,
+	"pageLength": 100,
+	"lengthMenu": [
+		[100, 500, 1000, -1],
+		[100, 500, 1000, "All"]
+	],
+	"ajax": {
+		"url": hiddenURL + 'notpickedOrderList',
+	},
+	"columnDefs": [{
+		"targets": [0, 9, 10, 12],
+		"orderable": false,
+		"searchable": false,
+	}],
+	"order": [
+		[8, "desc"]
+	],
+
+	"language": {
+		"infoFiltered": "",
+	},
+
+	dom: 'lBfrtip',
+	buttons: [{
+		extend: 'csv',
+		filename: 'Notpicked Order List',
+		text: 'Export',
+		className: 'btn btn-primary export_excel_data export_btn_order_intransit ',
+		exportOptions: {
+			//columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+			// columns: 'th:not(:last-child)'
+			columns: "thead th:not(.noExport)"
+		},
+
+	}]
+});
 
 /**
  * On process Order List

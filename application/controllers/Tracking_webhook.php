@@ -1,6 +1,15 @@
 <?php
 class Tracking_webhook extends CI_Controller
 {
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->db->cache_delete_all();
+	}
+
+
 	public function get_xpressbees_tracking_detail()
 	{
 		$post = @file_get_contents("php://input");
@@ -18,11 +27,7 @@ class Tracking_webhook extends CI_Controller
 					'location' => $array['CurrentLocation'],
 				);
 
-
-
-
 				$order_update_data = $this->set_order_status(strtolower($array['Remarks']), date("Y-m-d", strtotime($array['StatusDate'])));
-
 
 				if ($order_update_data['order_status_id'] == '9') {
 					$status = $this->db->select('order_id')->from('order_airwaybill_detail')->where('airwaybill_no', $array['AWBNO'])->where('order_status_id', '9')->get()->result_array();
@@ -63,6 +68,8 @@ class Tracking_webhook extends CI_Controller
 				$order_update_data['order_status_id'] = '1';
 				break;
 			case 'not picked':
+				$order_update_data['order_status_id'] = '8';
+				break;
 			case 'data received':
 				$order_update_data['order_status_id'] = '1';
 				break;
@@ -85,7 +92,7 @@ class Tracking_webhook extends CI_Controller
 			case 'assigned_for_seller_pickup':
 			case 'pickup created':
 			case 'ofp':
-				$order_update_data['order_status_id'] = '1';
+				$order_update_data['order_status_id'] = '2';
 				break;
 			case 'pickdone':
 				$order_update_data['order_status_id'] = '3';
@@ -100,13 +107,13 @@ class Tracking_webhook extends CI_Controller
 				$order_update_data['order_status_id'] = '3';
 				break;
 			case 'assigned for pickup':
-				$order_update_data['order_status_id'] = '1';
+				$order_update_data['order_status_id'] = '2';
 				break;
 			case 'out for pickup':
-				$order_update_data['order_status_id'] = '1'; //change
+				$order_update_data['order_status_id'] = '2'; //change
 				break;
 			case 'pickup not done':
-				$order_update_data['order_status_id'] = '1';
+				$order_update_data['order_status_id'] = '8';
 				break;
 			case 'on hold':
 				$order_update_data['order_status_id'] = '3';
@@ -201,11 +208,12 @@ class Tracking_webhook extends CI_Controller
 			case 'cancelled by customer':
 				$order_update_data['order_status_id'] = '9'; //change
 				break;
+			case "cancelled_by_customer":
 			case 'cancelled by seller':
-				$order_update_data['order_status_id'] = '9'; //change
+				$order_update_data['order_status_id'] = '1'; //change
 				break;
 			case 'cancelled':
-				$order_update_data['order_status_id'] = '9'; //change
+				$order_update_data['order_status_id'] = '1'; //change
 				break;
 			case "cid":
 			case 'not delivered':
@@ -213,7 +221,6 @@ class Tracking_webhook extends CI_Controller
 			case "nc":
 			case "na":
 			case "reopen_ndr":
-			case "cancelled_by_customer":
 				$order_update_data['order_status_id'] = '18'; //c
 				break;
 			case 'rto notified':
@@ -587,7 +594,7 @@ class Tracking_webhook extends CI_Controller
 				$insert_order_tracking_detail = array(
 					'order_id' => $single_order_info['order_id'],
 					'scan_date_time' => date("Y-m-d H:i:s", strtotime(str_replace("T", " ", $array['Shipment']['Status']['StatusDateTime']))),
-					'remark' => $array['Shipment']['Status']['Status'],
+					'remark' => $array['Shipment']['Status']['Instructions'],
 					'location' => $array['Shipment']['Status']['StatusLocation'],
 				);
 				// dd($array);

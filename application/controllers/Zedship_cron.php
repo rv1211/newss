@@ -31,6 +31,7 @@ class Zedship_cron extends CI_Controller
 		//sdf
 		$success_count = $error_count = 0;
 		$zship = $Xpressbees = $Ekart = $ecom = $Udaan = 0;
+		$this->db->cache_delete_all();
 		foreach ($data as $key => $value) {
 
 			// $check_duplicate = $this->db->select('fom.order_no')->from('forward_order_master as fom')->where('order_no', $value['order_no'])->get()->row_array();
@@ -63,7 +64,7 @@ class Zedship_cron extends CI_Controller
 				$repeat = 0;
 				$response = xpressbees_direct::xpressbees_order($value['id'], 0, '1');
 				$log_data['order_response'] = $response;
-				if ($response['status'] == 0 && $response['message'] == 'AWB Already Exists' && $repeat == 0) {
+				if ($response['status'] == 0 && $response['message'] == 'AirWayBillNO Already exists' && $repeat == 0) {
 					$response = xpressbees_direct::xpressbees_order($value['id'], 1, '1');
 					$log_data['order_response_repeat'] = $response;
 					$repeat++;

@@ -9,12 +9,12 @@
 	<style>
 		body {
 			font-family: Calibri !important;
-			font-size: 22px;
+			font-size: 20px;
 		}
 
 		body h3,
 		body table {
-			font-size: 22px;
+			font-size: 20px;
 		}
 
 		table {
@@ -141,15 +141,8 @@
 								</h4>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="3">Note-No Open Delivery Allowed <br>
-								<b>Order No.- <?php echo $single_order['customer_order_no']; ?> </b>
-							</td>
-						</tr>
-						<!-- <tr>
-                <td class="td" colspan="2"></td>
-                <td></td>
-            </tr> -->
+
+
 						<tr>
 							<td colspan="2"> Buyer Details :<b> <br>
 									<?php echo $single_order['deliver_name'] ?>(<?php echo $single_order['deliver_mobile_no']; ?>)</b><br>
@@ -210,7 +203,19 @@
 								<?php echo $single_order['uddan_barcode_text']; ?>
 							</td>
 						</tr>
-						<?php //endif; 
+						<tr>
+							<td colspan="3">Note-No Open Delivery Allowed <br>
+								<b>Order No.- <?php echo $single_order['customer_order_no']; ?> </b>
+							</td>
+						</tr>
+						<?php if (!empty($single_order['packing_slip_warehouse_name'])) : ?>
+							<tr>
+								<td class="td" colspan="3">
+									Reseller Info :- <br>`2
+									<b><?php echo @$single_order['packing_slip_warehouse_name'] ?></b>
+								</td>
+							</tr>
+						<?php endif;
 						?>
 					</table>
 				<?php } ?>

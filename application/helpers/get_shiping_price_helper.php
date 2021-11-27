@@ -207,7 +207,7 @@ if (!function_exists('get_shiping_price')) {
 			$logistic_name = ucfirst($logist_data->logistic_name);
 			$api_name = ucfirst($logist_data->api_name);
 			if ($sub_total != false || $shipment_type_previus === TRUE) {
-				$tax = get_get_with_detail_by_state($user_state, "MAHARASHTRA", $gst, $sub_total);
+				$tax = get_get_with_detail_by_state($user_state, "GUJRAT", $gst, $sub_total);
 				$total = (($gst / 100) * $sub_total) + $sub_total;
 				$data_response['data'][] = [
 					"logistic_id" =>  $key,
@@ -215,6 +215,7 @@ if (!function_exists('get_shiping_price')) {
 					"api_name" => $api_name,
 					"total" => $total,
 					"subtotal" => $sub_total,
+					"zone" => $mange_price_type,
 					"tax" => $tax,
 					"cod_ammount" => $cod_count,
 				];

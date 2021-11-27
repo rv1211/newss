@@ -1,173 +1,176 @@
 <div class="page">
 
-    <input type="hidden" name="razorpay_key" id="razorpay_key" value="<?= $this->config->item('RAZORPAY_KEY');  ?>">
+	<input type="hidden" name="razorpay_key" id="razorpay_key" value="<?= $this->config->item('RAZORPAY_KEY');  ?>">
 
-    <div class="page-content ">
+	<div class="page-content ">
 
-        <div class="panel">
+		<div class="panel">
 
-            <header class="panel-heading">
+			<header class="panel-heading">
 
-                <h2 class="panel-title">
+				<h2 class="panel-title">
 
-                    Your Wallet Amount: Rs.
+					Your Wallet Amount: Rs.
 
-                    <?= (@$wallet_balance['wallet_balance'] != '') ? (@$wallet_balance['wallet_balance']) : $this->session->userdata('wallet_balance'); ?>
+					<?= (@$wallet_balance['wallet_balance'] != '') ? (@$wallet_balance['wallet_balance']) : $this->session->userdata('wallet_balance'); ?>
 
-                </h2>
+				</h2>
 
-            </header>
+			</header>
 
-            <div class="panel-body">
+			<div class="panel-body">
 
-                <!-- <form action="<?= base_url('wallet-transaction'); ?>" name="wallet_transaction" method="post" class="wallet-transaction"> -->
+				<!-- <form action="<?= base_url('wallet-transaction'); ?>" name="wallet_transaction" method="post" class="wallet-transaction"> -->
 
-                <div class="row row-lg">
+				<div class="row row-lg">
 
-                    <div class="col-md-12 col-lg-5">
+					<div class="col-md-12 col-lg-5">
 
-                        <!-- Example Horizontal Form -->
+						<!-- Example Horizontal Form -->
 
-                        <div class="">
+						<div class="">
 
-                            <h4 class="example-title">Wallet Transaction</h4>
+							<h4 class="example-title">Wallet Transaction</h4>
 
-                            <div class="example">
+							<div class="example">
 
-                                <div class="form-group form-material row">
+								<div class="form-group form-material row">
 
-                                    <label class="col-md-2 col-form-label">Amount (Rs.): </label>
+									<label class="col-md-2 col-form-label">Amount (Rs.): </label>
 
-                                    <div class="col-md-10">
+									<div class="col-md-10">
 
-                                        <input type="text" class="form-control" id="wallet_amount" name="wallet_amount" placeholder="Wallet Amount" autocomplete="off" />
+										<input type="text" class="form-control" id="wallet_amount" name="wallet_amount" placeholder="Wallet Amount" autocomplete="off" />
 
-                                        <?php if (!empty($errors)) :  ?>
+										<?php if (!empty($errors)) :  ?>
 
-                                            <label class="error"><?php echo $errors['wallet_amount']; ?> </label>
+											<label class="error"><?php echo $errors['wallet_amount']; ?> </label>
 
-                                        <?php endif; ?>
+										<?php endif; ?>
 
-                                    </div>
+									</div>
 
-                                </div>
+								</div>
 
-                            </div>
+							</div>
 
-                        </div>
+						</div>
 
-                        <!-- End Example Horizontal Form -->
+						<!-- End Example Horizontal Form -->
 
-                    </div>
+					</div>
 
-                    <div class="col-md-12 col-lg-3">
+					<div class="col-md-12 col-lg-3">
 
-                        <!-- Example Horizontal Form -->
+						<!-- Example Horizontal Form -->
 
-                        <div class="">
+						<div class="">
 
-                            <div class="example">
+							<div class="example">
 
-                                <div class="form-group form-material row">
+								<div class="form-group form-material row">
 
-                                    <div class="col-md-9">
+									<div class="col-md-9">
 
-                                        <button type="submit" class="btn btn-primary" id="wallet_transaction_recharge_wallet_button">Submit </button>
+										<button type="submit" class="btn btn-primary" id="wallet_transaction_recharge_wallet_button">Submit </button>
 
-                                        <button type="reset" class="btn btn-default btn-outline">Reset</button>
+										<button type="reset" class="btn btn-default btn-outline">Reset</button>
 
-                                    </div>
+									</div>
 
-                                </div>
+								</div>
 
-                            </div>
+							</div>
 
-                        </div>
+						</div>
 
-                        <!-- End Example Horizontal Form -->
+						<!-- End Example Horizontal Form -->
 
-                    </div>
+					</div>
 
-                </div>
+				</div>
 
-                <div class="row row-lg">
+				<div class="row row-lg">
 
-                    <!-- <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="1000">Rs. 1000</button>
+					<!-- <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="1000">Rs. 1000</button>
 
                      <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="1500">Rs. 1500</button> -->
 
-                    <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="100">Rs.
+					<button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="100">Rs.
 
-                        100</button>
+						100</button>
 
-                    <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="500">Rs.
+					<button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="500">Rs.
 
-                        500</button>
+						500</button>
 
-                    <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="2000">Rs.
+					<button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="2000">Rs.
 
-                        2000</button>
+						2000</button>
 
-                    <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="5000">Rs.
+					<button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="5000">Rs.
 
-                        5000</button>
-                    <button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="10000">Rs.
+						5000</button>
+					<button type="button" class="wallet_transaction_select_amount wallet_btn btn" value="10000">Rs.
 
-                        10000</button>
+						10000</button>
 
-                </div>
+				</div>
 
-                </form>
+				</form>
 
-            </div>
+			</div>
 
-        </div>
+		</div>
 
-        <!-- Panel Basic -->
+		<!-- Panel Basic -->
 
-        <div class="panel">
+		<div class="panel">
 
-            <header class="panel-heading">
+			<header class="panel-heading">
 
-                <div class="panel-actions"></div>
+				<div class="panel-actions"></div>
 
-                <h3 class="panel-title">Basic</h3>
+				<h3 class="panel-title">Basic</h3>
 
-            </header>
+			</header>
 
-            <div class="panel-body">
+			<div class="panel-body">
 
-                <table class="table table-striped table-borderd" id="wallet_transaction_tbl">
+				<table class="table table-striped table-borderd" id="wallet_transaction_tbl">
 
-                    <thead>
+					<thead>
 
-                        <tr>
+						<tr>
 
-                            <th>Date</th>
+							<th>Date</th>
 
-                            <th>Debit</th>
+							<th>Debit</th>
 
-                            <th>Credit</th>
+							<th>Credit</th>
 
-                            <th>Balance</th>
+							<th>Balance</th>
 
-                            <th>Remarks</th>
+							<th>Remarks</th>
+							<?php
+							if ($this->session->userdata('userType') == 1) :  ?>
+								<th>User </th>
+							<?php endif; ?>
+						</tr>
 
-                        </tr>
+					</thead>
 
-                    </thead>
+					<tbody></tbody>
 
-                    <tbody></tbody>
+				</table>
 
-                </table>
+			</div>
 
-            </div>
+		</div>
 
-        </div>
+		<!-- End Panel Basic -->
 
-        <!-- End Panel Basic -->
-
-    </div>
+	</div>
 
 </div>
 

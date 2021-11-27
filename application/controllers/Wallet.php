@@ -52,7 +52,8 @@ class Wallet extends Auth_Controller
 			if ($this->session->userdata('userType') == 4) {
 				$this->data['wallet_balance'] = $this->Common_model->getWhere(array('id' => $this->customer_id), 'wallet_balance', 'sender_master');
 			} else {
-				$this->data['wallet_balance'] = $this->Common_model->getWhere(array('id' => $this->customer_id), 'wallet_balance', 'user_master');
+				$this->data['wallet_balance'] =
+					$this->Common_model->getWhere(array('id' => $this->customer_id), 'wallet_balance', 'sender_master');
 			}
 
 			$this->loadview('wallet_transaction', $this->data);
@@ -73,16 +74,23 @@ class Wallet extends Auth_Controller
 		$columns = array();
 		$table = 'wallet_transaction';
 		$primaryKey = 'id';
-		$where = "sender_id = $userid";
+		if ($this->session->userdata('userType') == 4) {
+			$where = "sender_id = $userid";
+		}
+		$joinQuery = ' FROM ' . $table . ' as wt INNER JOIN sender_master as sm ON sm.id = wt.sender_id';
 
-		$columns[0] = array('db' => 'created_date', 'dt' => 0, 'field' => 'created_date');
-		$columns[1] = array('db' => 'debit', 'dt' => 1, 'field' => 'debit');
-		$columns[2] = array('db' => 'credit', 'dt' => 2, 'field' => 'credit');
-		$columns[3] = array('db' => 'runningbalance', 'dt' => 3, 'field' => 'runningbalance');
-		$columns[4] = array('db' => 'remarks', 'dt' => 4, 'field' => 'remarks');
+		$columns[0] = array('db' => 'wt.created_date', 'dt' => 0, 'field' => 'created_date');
+		$columns[1] = array('db' => 'wt.debit', 'dt' => 1, 'field' => 'debit');
+		$columns[2] = array('db' => 'wt.credit', 'dt' => 2, 'field' => 'credit');
+		$columns[3] = array('db' => 'wt.runningbalance', 'dt' => 3, 'field' => 'runningbalance');
+		$columns[4] = array('db' => 'wt.remarks', 'dt' => 4, 'field' => 'remarks');
+		if ($this->session->userdata('userType') == 1) {
+			$columns[5] = array('db' => 'sm.email', 'dt' => 5, 'field' => 'email');
+		}
+
 
 		echo json_encode(
-			SSP::simple($_GET, $table, $primaryKey, $columns, '', $where)
+			SSP::simple($_GET, $table, $primaryKey, $columns, $joinQuery, $where)
 		);
 	}
 

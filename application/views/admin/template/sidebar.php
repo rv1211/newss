@@ -146,6 +146,11 @@ $page = basename($currentUrl);
 										<span class="site-menu-title">Customer Used Credit</span>
 									</a>
 								</li>
+								<li class="site-menu-item <?= $page == 'customer-used-credit' ? 'active' : ''; ?>">
+									<a class="animsition-link" href="<?= base_url('clear-stuck') ?>">
+										<span class="site-menu-title">Claer Bulk Stuck</span>
+									</a>
+								</li>
 							</ul>
 						</li>
 						<?php if ($this->session->userdata('userType') == '1') : ?>

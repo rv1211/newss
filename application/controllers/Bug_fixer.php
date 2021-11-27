@@ -282,6 +282,15 @@ class Bug_fixer extends CI_Controller
 
 		$sql = "UPDATE `temp_order_master` SET `is_running` = '0' WHERE `temp_order_master`.`is_flag` = '1'";
 		$query = $this->db->query($sql);
+
+		$this->session->set_flashdata('message', "Bulk Order Queue Reset Successfull");
+		redirect('clear-stuck');
+	}
+
+
+	public function clear_bulk()
+	{
+		load_admin_view("bulk_order", "clear_queue");
 	}
 }   
 

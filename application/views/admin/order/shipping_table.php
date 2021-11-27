@@ -23,6 +23,7 @@
 
 					usort($shippingprice, 'sort_price');
 					foreach ($shippingprice as $key => $shippingvalue) {
+
 						if ($shippingvalue['subtotal'] != "Rulse Is Not Proper It's Infinite") {
 					?>
 							<tr>
@@ -56,6 +57,7 @@
 									<span class="igst amount"><?php echo $shippingvalue['tax']['IGST']; ?></span>
 									<span class="sgst amount"><?php echo $shippingvalue['tax']['SGST']; ?></span>
 									<input type="hidden" id="cod_amount" value="<?= $shippingvalue['cod_ammount']; ?>">
+									<span class="zone amount"><?= $shippingvalue['zone']; ?></span>
 								</td>
 								<td>
 									<strong>&#8377; </strong>

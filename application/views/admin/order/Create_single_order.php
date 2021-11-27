@@ -467,6 +467,7 @@
 				<input type="hidden" name="total" id="total" value="">
 				<input type="hidden" name="logistic_id" id="logistic_id" value="">
 				<input type="hidden" name="cod_charge" id="cod_charge" value="">
+				<input type="hidden" name="zone" id="zone" value="">
 
 
 				<div class="ship_div"></div>
