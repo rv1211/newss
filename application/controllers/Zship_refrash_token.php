@@ -23,6 +23,8 @@ class Zship_refrash_token extends CI_Controller
 
 		$xpressbees_refrashToken = $this->xpressbees_refrash_token();
 		$xpressbees_air_refrashToken = $this->xpressbees_air_refrash_token();
+		$shiprocket_refreshToken = $this->shiprocket_refresh_token();
+
 		// echo '<pre>';
 		// print_r($xpressbees_air_refrashToken);
 		// echo '</pre>';
@@ -133,5 +135,56 @@ class Zship_refrash_token extends CI_Controller
 			echo "Your Order Failed to Shipped due to some error. " . @$response['error_response'];
 		}
 		file_put_contents(APPPATH . 'logs/zship_awb/' . date("d-m-Y") . '_xpressbees_AIR_refrash_token.txt', print_r($arr2, true) . "\n------------------- Refrash Token End ---------------\n", FILE_APPEND);
+	}
+
+
+	public function shiprocket_refresh_token()
+	{
+
+
+		$last_time = $this->db->select('updated_date')->from('zship_token_master')->get()->row_array();
+		// dd($last_time);
+
+		$date1 = date_create_from_format('Y-m-d', $last_time['shiprocket_date']);
+		// dd($date1);
+		$date2 = date_create_from_format('Y-m-d', date('Y-m-d'));
+		$diff = (array) date_diff($date1, $date2);
+
+
+
+		if ($diff['d'] < 10) {
+			echo "no time";
+		} else {
+			$body = '{
+				"email":"' . $this->config->item('SHIPROCKET_EMAIL') . '",
+				"password":"' . $this->config->item('SHIPROCKET_PASSWORD') . '"
+			}';
+
+
+			$response = CUSTOM::curl_request(
+				'application/json',
+				'',
+				$this->config->item('SHIPROCKET_AUTH_URL'),
+				$body,
+				"POST"
+			);
+
+			$arr2['response'] = $response;
+			// dd($response);
+			if (@$response['success_response'] != '') {
+				$resultResponse = (@$response['success_response']);
+				$data['shiprocket_token'] = @$resultResponse['token'];
+				$data['shiprocket_date'] = date('Y-m-d');
+				// dd($data);
+				$result = $this->Common_model->update($data, 'zship_token_master', array('id' => '1'));
+				$this->test_db->where('id', '1')->update('zship_token_master', $data);
+				$arr2['message'] = "Token updated successfully.";
+				$arr2['date'] = date('Y-m-d H:i:s');
+				echo "Token updated successfully.";
+			} else {
+				echo "Your Order Failed to Shipped due to some error. " . @$response['error_response'];
+			}
+			file_put_contents(APPPATH . 'logs/zship_awb/' . date("d-m-Y") . '_ShipRocket_refrash_token.txt', print_r($arr2, true) . "\n------------------- Refrash Token End ---------------\n", FILE_APPEND);
+		}
 	}
 }

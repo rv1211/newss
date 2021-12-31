@@ -32,7 +32,7 @@ class Order extends Auth_Controller
 	public function index()
 	{
 		// dd($_POST);
-		$this->db->cache_delete_all();
+
 		$this->data['pickup_address'] = $this->Create_singleorder_awb->get_pickup_address($this->session->userdata('userId'));
 		if ($this->input->post()) {
 			$validation = [
@@ -223,6 +223,11 @@ class Order extends Auth_Controller
 						} else if ($logistic_name['api_name'] == 'Deliverysexpress_Direct') {
 							$this->load->helper('delhiver_direct');
 							$response = delhiver_direct::create_order($insert_tmp_order, 0, 1);
+							$createOrder_response_log['order_response'] = $response;
+							file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
+						} else if (strpos($logistic_name['api_name'], 'ssl') !== false) {
+							$this->load->helper('shiprocket_direct');
+							$response = shiprocket_direct::create_order($insert_tmp_order, 0);
 							$createOrder_response_log['order_response'] = $response;
 							file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
 						}

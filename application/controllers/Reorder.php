@@ -115,7 +115,15 @@ class Reorder extends Auth_Controller
 				$response = delhiver_direct::create_order($insert_tmp_order, 0, 1);
 				$createOrder_response_log['order_response'] = $response;
 				file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
+			} else if (strpos($logistic_name['api_name'], 'ssl') !== false) {
+				$this->load->helper('shiprocket_direct');
+				$response = shiprocket_direct::create_order($insert_tmp_order, 0);
+				$createOrder_response_log['order_response'] = $response;
+				file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
 			}
+
+
+
 			if ($response['status'] == 0) {
 				$this->session->set_flashdata('error', $response['message']);
 			} else {

@@ -5,7 +5,7 @@ class wallet_direct
 	 * Wallet Deduct
 	 * @return Response
 	 */
-	static function debit_wallet($order_id, $temp_table_name, $awbNumber, $order_no, $error = '', $is_delete = 1, $udaan_shipmentIds = '', $ecart_requestId = '')
+	static function debit_wallet($order_id, $temp_table_name, $awbNumber, $order_no, $error = '', $is_delete = 1, $udaan_shipmentIds = '', $ecart_requestId = '', $shipr_order_id = '', $shpr_shipment_id = '')
 	{
 		$CI = &get_instance();
 		$CI->load->model('Create_singleorder_awb');
@@ -21,6 +21,8 @@ class wallet_direct
 		$orderdata = $CI->Common_model->getSingle_data('*', $temp_table_name, array('id' => $order_id));
 		$log_data['awb_number'] = $awbNumber;
 		$log_data['order_data'] = $orderdata;
+		$log_data['shipr_order_id'] = $shipr_order_id;
+		$log_data['shpr_shipment_id'] = $shpr_shipment_id;
 		$log_data['order_no'] = $order_no;
 		$log_data['order_query'] = $CI->db->last_query();
 		$logistic = $CI->Common_model->getSingle_data('api_name', 'logistic_master', array('id' => $orderdata['logistic_id']));
@@ -56,7 +58,7 @@ class wallet_direct
 					// minus balance
 					if ($getwallet_data['allow_credit_limit'] > abs($remain_balance) && $getwallet_data['allow_credit_limit'] != 0) {
 						// Debit success
-						$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '0', $is_delete, $udaan_shipmentIds, $ecart_requestId);
+						$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '0', $is_delete, $udaan_shipmentIds, $ecart_requestId, $shipr_order_id, $shpr_shipment_id);
 						$log_order['wallet_debit'] = $wallet_debit;
 						file_put_contents(APPPATH . 'logs/wallet_log/' . date("d-m-Y") . '_wallet_' . $orderdata['sender_id'] . '_log.txt', "\n" . print_r($log_order, true), FILE_APPEND);
 						$responce['status'] = $wallet_debit == 'success' ? '1' : "0";
@@ -73,7 +75,7 @@ class wallet_direct
 					}
 				} else {
 					// debit from wallat
-					$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '1', $is_delete, $udaan_shipmentIds, $ecart_requestId);
+					$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '1', $is_delete, $udaan_shipmentIds, $ecart_requestId, $shipr_order_id, $shpr_shipment_id);
 					$log_order['wallet_debit'] = $wallet_debit;
 					file_put_contents(APPPATH . 'logs/wallet_log/' . date("d-m-Y") . '_wallet_' . $orderdata['sender_id'] . '_log.txt', "\n" . print_r($log_order, true), FILE_APPEND);
 					$responce['status'] = $wallet_debit == 'success' ? '1' : "0";
@@ -83,7 +85,7 @@ class wallet_direct
 				// No Allow Credit
 				if ($remain_balance >= 000) {
 					// Cut from Wallat
-					$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '1', $is_delete, $udaan_shipmentIds, $ecart_requestId);
+					$wallet_debit = wallet_direct::wallet_update($order_id, $logistic['api_name'], $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, '1', $is_delete, $udaan_shipmentIds, $ecart_requestId, $shipr_order_id, $shpr_shipment_id);
 					$log_order['wallet_debit'] = $wallet_debit;
 					file_put_contents(APPPATH . 'logs/wallet_log/' . date("d-m-Y") . '_wallet_' . $orderdata['sender_id'] . '_log.txt', "\n" . print_r($log_order, true), FILE_APPEND);
 					$responce['status'] = $wallet_debit == 'success' ? '1' : "0";
@@ -104,7 +106,7 @@ class wallet_direct
 	}
 
 	// Debit Amount
-	static function wallet_update($order_id, $api_name, $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, $is_wallet, $is_delete, $udaan_shipmentIds, $ecart_requestId)
+	static function wallet_update($order_id, $api_name, $awbNumber, $orderdata, $temp_table_name, $getwallet_data, $order_charge, $order_no, $is_wallet, $is_delete, $udaan_shipmentIds, $ecart_requestId, $shipr_order_id = '', $shpr_shipment_id = '')
 	{
 		$CI = &get_instance();
 		$CI->load->model('Common_model');
@@ -127,6 +129,8 @@ class wallet_direct
 			$log_order['update_amount_query'] = $CI->db->last_query();
 			$log_order['update_amount_result'] = $update_amount;
 
+			$orderdata['shipr_order_id'] = $shipr_order_id;
+			$orderdata['shpr_shipment_id'] = $shpr_shipment_id;
 			$last_insertId = wallet_direct::move_order($order_id, $api_name, $awbNumber, $orderdata, $order_no, '', $temp_table_name, 'forward_order_master', $is_delete, $udaan_shipmentIds, $ecart_requestId);
 			$log_order['move_order'] = $last_insertId;
 

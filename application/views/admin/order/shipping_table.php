@@ -28,29 +28,40 @@
 					?>
 							<tr>
 								<td>
-
 									<input class="selectable-item" name="logi" type="radio">
 									<label for="row-619"></label>
 								</td>
 								<td>
-									<?php if ($shippingvalue['api_name'] == 'Delhivery_Surface' || $shippingvalue['api_name'] == 'Delhivery_Direct') : ?>
+									<?php if (trim($shippingvalue['api_name']) == 'Delhivery_Surface' || trim($shippingvalue['api_name']) == 'Delhivery_Direct' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_surface_10_kgs_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_surface_2_kgs_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_surface_20_kgs_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_surface_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_surface_5_kgs_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'delhivery_ssl') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/delhivery.jpg" style="border: none; height:40px; width:150px;">
 									<?php endif; ?>
-									<?php if ($shippingvalue['api_name'] == 'Xpressbees_Surface' || $shippingvalue['api_name'] == 'Xpressbees_express' ||  $shippingvalue['api_name'] == 'Xpressbees_Direct' || $shippingvalue['api_name'] == 'Xpressbeesair_Direct') : ?>
+									<?php if (trim($shippingvalue['api_name']) == 'Xpressbees_Surface' || trim($shippingvalue['api_name']) == 'Xpressbees_express' ||  trim($shippingvalue['api_name']) == 'Xpressbees_Direct' || trim($shippingvalue['api_name']) == 'Xpressbeesair_Direct' || strtolower(trim($shippingvalue['api_name'])) == 'xpressbees_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'xpressbees_surface_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'xpressbees_1kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'xpressbees_2kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'xpressbees_5kg_ssl') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/xpressbees.jpg" style="border: none; height:40px; width:150px;">
 									<?php endif; ?>
-									<?php if ($shippingvalue['api_name'] == 'Ekart_Surface' || $shippingvalue['api_name'] == 'Ecart_air' || $shippingvalue['api_name'] == 'Ekart_Direct') : ?>
+									<?php if (trim($shippingvalue['api_name']) == 'ekart_Surface' || trim($shippingvalue['api_name']) == 'ecart_air' || trim($shippingvalue['api_name']) == 'ekart_Direct' || strtolower(trim($shippingvalue['api_name'])) == 'ekart_logistics_surface_ssl'  || strtolower(trim($shippingvalue['api_name'])) == 'ekart_logistics_surface_ssl') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/ekart.jpg" style="border: none; height:40px; width:150px;">
 									<?php endif; ?>
-									<?php if ($shippingvalue['api_name'] == 'Udaan_Direct') : ?>
+									<?php if (trim($shippingvalue['api_name']) == 'Udaan_Direct') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/uddan.jpg" style="border: none; height:40px; width:150px;">
-									<?php endif ?>
-									<?php if ($shippingvalue['api_name'] == 'Ecom_Direct') : ?>
+									<?php endif; ?>
+									<?php if (trim($shippingvalue['api_name']) == 'Ecom_Direct' || strtolower(trim($shippingvalue['api_name'])) == 'ecom_express_surface_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'ecom_express_surface_2kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'ecom_express_surface_500gms_ssl') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/ecom.jpg" style="border: none; height:40px; width:150px;">
-									<?php endif ?>
-									<?php if ($shippingvalue['api_name'] == 'Shadowfax_Direct') : ?>
+									<?php endif; ?>
+									<?php if (trim($shippingvalue['api_name']) == 'Shadowfax_Direct' || strtolower(trim($shippingvalue['api_name'])) == 'shadowfax_surface_ssl') : ?>
 										<img src="<?php echo base_url(); ?>assets/custom/img/shadowfax.jpg" style="border: none; height:40px; width:150px;">
-									<?php endif ?>
+									<?php endif; ?>
+									<?php if (strtolower(trim($shippingvalue['api_name'])) == 'blue_dart_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'blue_dart_surface_ssl') : ?>
+										<img src="<?php echo base_url(); ?>assets/custom/img/Bluedart.jpg" style="border: none; height:40px; width:150px;">
+									<?php endif; ?>
+									<?php if (strtolower(trim($shippingvalue['api_name'])) == 'amazon_shipping_5kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'amazon_shipping_1kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'amazon_shipping_2kg_ssl') : ?>
+										<img src="<?php echo base_url(); ?>assets/custom/img/amazon.jpeg" style="border: none; height:40px; width:150px;">
+									<?php endif; ?>
+									<?php if (strtolower(trim($shippingvalue['api_name'])) == 'dtdc_2kg_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'dtdc_surface_ssl' || strtolower(trim($shippingvalue['api_name'])) == 'dtdc_surface_ssl') : ?>
+										<img src="<?php echo base_url(); ?>assets/custom/img/dtdc.jpg" style="border: none; height:40px; width:150px;">
+									<?php endif; ?>
+									<?php if (strtolower(trim($shippingvalue['api_name'])) == 'kerry_indev_express_surface_ssl') : ?>
+										<img src="<?php echo base_url(); ?>assets/custom/img/kerry_indev.jpg" style="border: none; height:40px; width:150px;">
+									<?php endif; ?>
 									<?= $shippingvalue['logistic']; ?>
 									<span class="logistic_id amount"><?php echo $shippingvalue['logistic_id']; ?></span>
 									<span class="cgst amount"><?php echo $shippingvalue['tax']['CGST']; ?></span>

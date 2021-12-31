@@ -729,4 +729,165 @@ class Tracking_webhook extends CI_Controller
 		}
 		file_put_contents(APPPATH . 'logs/tracking_webhook_log/' . date("d-m-Y") . '_Shadowfax_log.txt', "\n------- End Log ------------\n", FILE_APPEND);
 	}
+
+	public function ship_rocket_webhook()
+	{
+		$path = APPPATH . 'logs/shiproket_tracking/';
+		if (!file_exists($path)) {
+			mkdir($path, 0777, true);
+		}
+		$post = file_get_contents('php://input');
+		$post = ' {
+			"awb": 59629792084,
+			"current_status": "Delivered",
+			"order_id": "13905312",
+			"current_timestamp": "2021-07-02 16:41:59",
+			"etd": "2021-07-02 16:41:59",
+			"current_status_id": 7,
+			"shipment_status": "Delivered",
+			"shipment_status_id": 7,
+			"channel_order_id": "enter your channel order id",
+			"channel": "enter your channel name",
+			"courier_name": "enter courier_name",
+			"scans": [
+			{
+			"date": "2019-06-25 12:08:00",
+			"activity": "SHIPMENT DELIVERED",
+			"location": "PATIALA"
+			},
+			{
+			"date": "2019-06-25 12:06:00",
+			"activity": "NECESSARY CHARGES PENDING FROM CONSIGNEE",
+			"location": "PATIALA"
+			},
+			{
+			"date": "2019-06-25 10:18:00",
+			"activity": "SHIPMENT OUT FOR DELIVERY",
+			"location": "PATIALA"
+			},
+			{
+			"date": "2019-06-25 09:40:00",
+			"activity": "SHIPMENT ARRIVED",
+			"location": "PATIALA"
+			},
+			{
+			"date": "2019-06-25 07:32:00",
+			"activity": "SHIPMENT FURTHER CONNECTED",
+			"location": "AMBALA AIR HUB"
+			},
+			{
+			"date": "2019-06-25 07:03:00",
+			"activity": "SHIPMENT ARRIVED AT HUB",
+			"location": "AMBALA AIR HUB"
+			},
+			{
+			"date": "2019-06-25 00:45:00",
+			"activity": "SHIPMENT FURTHER CONNECTED",
+			"location": "KAPASHERA HUB"
+			},
+			{
+			"date": "2019-06-25 00:20:00",
+			"activity": "SHIPMENT ARRIVED AT HUB",
+			"location": "KAPASHERA HUB"
+			},
+			{
+			"date": "2019-06-24 23:17:00",
+			"activity": "SHIPMENT FURTHER CONNECTED",
+			"location": "COD PROCESSING CENTRE I"
+			},
+			{
+			"date": "2019-06-24 21:14:00",
+			"activity": "SHIPMENT ARRIVED",
+			"location": "COD PROCESSING CENTRE I"
+			},
+			{
+			"date": "2019-06-24 18:56:00",
+			"activity": "SHIPMENT PICKED UP",
+			"location": "COD PROCESSING CENTRE I"
+			}
+			]
+			}';
+		$log_data1['post_response'] = $post;
+		$array = json_decode($post, true);
+		$log_data1['post_data'] = $array;
+		file_put_contents(APPPATH . 'logs/shiproket_tracking/' . date("d-m-Y") . '_tracking_webhook_responce.txt', "\n------- Start Log ------\n" . print_r($log_data1, true) . "\n\n", FILE_APPEND);
+
+		if (!empty($array['awb']) && !empty($array['current_status']) && !empty($array['order_id'])) {
+
+			$single_order_info = $this->Common_model->getSingleRowArray(array('airwaybill_no' => $array['awb']), 'id,order_status_id,order_id,order_type', 'order_airwaybill_detail');
+			$log_data['single_order_info'] = $single_order_info;
+			// dd($single_order_info);
+			if (!empty($single_order_info)) {
+
+				$status_data = $this->Common_model->getSingleRowArray(array('status_code' => $array['status']), '*', 'ecom_tracking_status');
+
+				$insert_order_tracking_detail = array(
+					'order_id' => $single_order_info['order_id'],
+					'scan_date_time' => date("Y-m-d H:i:s", strtotime($array['datetime'])),
+					'remark' => $status_data['remarks'],
+					'location' => $array['location'],
+				);
+
+				if ($status_data['status_id'] == '11' && in_array($single_order_info['order_status_id'], array('5', '3', '18'))) {
+					$status = $this->db->select('order_id')->from('order_airwaybill_detail')->where('airwaybill_no', $array['awb'])->where('order_status_id', '11')->get()->result_array();
+					//if (!empty($status)) {
+
+					$result = wallet_direct::refund_wallet(trim($array['awb']), '0', '2');
+					$log_data['walelt_data'] = $status;
+					$log_data['wallet_debit_responce'] = $result;
+					//}
+				}
+
+				if ($status_data['status_id'] == '6'  &&  in_array($single_order_info['order_status_id'], array('9', '10', '11', '12'))) {
+					$status = $this->db->select('order_id')->from('order_airwaybill_detail')->where('airwaybill_no', $array['awb'])->where('order_status_id', '14')->get()->result_array();
+
+					$status_data['status_id'] = '14';
+
+					//if (!empty($status)) {
+					$result = wallet_direct::refund_wallet(trim($array['awb']), '1', '2');
+					$log_data['walelt_data'] = $status;
+					$log_data['wallet_credit_responce'] = $result;
+					//}
+				}
+
+				$single_order_status_info = $this->Common_model->getSingleRowArray(array('order_status_id' => $status_data['status_id']), 'status_name', 'order_status');
+
+				$insert_order_tracking_detail['scan'] = $single_order_status_info['status_name'];
+
+				$log_data['status_update_query'] = $this->db->last_query();
+				$log_data['scan'] = $insert_order_tracking_detail['scan'];
+
+				// if ($single_order_info['order_status_id'] != $status_data['status_id']) {
+				$this->Common_model->insert($insert_order_tracking_detail, 'order_tracking_detail');
+				$tracking_status = $this->db->affected_rows();
+
+				$update_data1 = [
+					'order_status_id' => $status_data['status_id'],
+					'delivery_date' => ($status_data['status_id'] == '14' || $status_data['status_id'] == '6')  ?  date('Y-m-d ', strtotime($array['datetime'])) : null,
+				];
+
+
+				$this->Common_model->update($update_data1, 'order_airwaybill_detail', array('order_id' => $single_order_info['order_id']));
+				$awb_update_status = $this->db->affected_rows();
+				$log_data['status_update_query'] = $this->db->last_query();
+
+
+				if ($awb_update_status == 0 || $tracking_status == 0 || $awb_update_status == '0' || $tracking_status == '0') {
+					$array = ['awb' => $array['awb'], 'status' => 'false', 'reason' => "data can't be update in system", 'status_update_number' => $array['status_update_number']];
+					echo json_encode($array);
+				} else {
+					$array = ['awb' => $array['awb'], 'status' => 'true', 'status_update_number' => $array['status_update_number']];
+					echo json_encode($array);
+				}
+			} else {
+				$array = ['awb' => $array['awb'], 'status' => 'false', 'reason' => "Order data not found in our database", 'status_update_number' => $array['status_update_number']];
+				echo json_encode($array);
+			}
+		} else {
+			$array = ['awb' => $array['awb'], 'status' => 'false', 'reason' => "Something missing in data", 'status_update_number' => $array['status_update_number']];
+			echo json_encode($array);
+		}
+
+		file_put_contents(APPPATH . 'logs/shiproket_tracking/' . date("d-m-Y") . '_tracking_webhook_responce.txt', print_r($log_data, true) . "\n------- END Log ------\n\n", FILE_APPEND);
+	}
 }

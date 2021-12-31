@@ -112,6 +112,8 @@ class CUSTOM
 		if ($token != "") {
 			if ($shadowfax == "1") {
 				$headers[] = "Authorization: Token " . $token;
+			} else if ($shadowfax == '2') {
+				$headers[] = "Authorization: Bearer " . $token;
 			} else {
 				$headers[] = "Authorization: " . $token;
 			}

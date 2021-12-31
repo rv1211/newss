@@ -58,7 +58,7 @@
 			<tr>
 
 				<td colspan="2">
-					<?php if ($order_info['api_name'] == 'Delhivery_Surface' || $order_info['api_name'] == 'Delhivery_Direct' || $order_info['api_name'] == 'Deliverysexpress_Direct') : ?>
+					<?php if ($order_info['api_name'] == 'Delhivery_Surface' || $order_info['api_name'] == 'Delhivery_Direct' || $order_info['api_name'] == 'Deliverysexpress_Direct' || strtolower(trim($order_info['api_name'])) == 'delhivery_ssl' || strtolower(trim($order_info['api_name'])) == 'delhivery_surface_5_kgs_ssl' || strtolower(trim($order_info['api_name'])) == 'delhivery_surface_ssl' || strtolower(trim($order_info['api_name'])) == 'delhivery_surface_2_kgs_ssl' || strtolower(trim($order_info['api_name'])) == 'delhivery_surface_10_kgs_ssl' || strtolower(trim($order_info['api_name'])) == 'delhivery_surface_20_kgs_ssl') : ?>
 						<?php
 						$path = 'assets/custom/img/delhivery.jpg';
 						$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -68,7 +68,7 @@
 						<img src="<?php echo $base64_img; ?>" width="200" height="80">
 					<?php endif; ?>
 
-					<?php if ($order_info['api_name'] == 'Xpressbees_Surface' || $order_info['api_name'] == 'Xpressbees_Direct' || $order_info['api_name'] == 'Xpressbeesair_Direct') : ?>
+					<?php if ($order_info['api_name'] == 'Xpressbees_Surface' || $order_info['api_name'] == 'Xpressbees_Direct' || $order_info['api_name'] == 'Xpressbeesair_Direct' || strtolower(trim($order_info['api_name'])) == 'xpressbees_ssl' || strtolower(trim($order_info['api_name'])) == 'xpressbees_surface_ssl' || strtolower(trim($order_info['api_name'])) == 'xpressbees_2kg_ssl' || strtolower(trim($order_info['api_name'])) == 'xpressbees_1kg_ssl' || strtolower(trim($order_info['api_name'])) == 'xpressbees_5kg_ssl') : ?>
 						<?php
 						$path = 'assets/custom/img/xpressbees.jpg';
 						$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -77,7 +77,7 @@
 						?>
 						<img src="<?php echo $base64_img; ?>" width="200" height="80">
 					<?php endif; ?>
-					<?php if ($order_info['api_name'] == 'Ekart_Surface' || $order_info['api_name'] == 'Ecart_air') : ?>
+					<?php if ($order_info['api_name'] == 'Ekart_Surface' || $order_info['api_name'] == 'Ecart_air' || strtolower(trim($order_info['api_name'])) == 'ekart_logistics_surface_ssl') : ?>
 						<?php
 						$path = "assets/custom/img/ekart.jpg";
 						$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -86,7 +86,7 @@
 						?>
 						<img src="<?php echo $base64_img ?>" width="200" height="80">
 					<?php endif; ?>
-					<?php if ($order_info['api_name'] == 'Ecom_Direct') : ?>
+					<?php if ($order_info['api_name'] == 'Ecom_Direct' || strtolower(trim($order_info['api_name'])) == 'ecom_express_surface_500gms_ssl' || strtolower(trim($order_info['api_name'])) == 'ecom_express_surface_ssl' || strtolower(trim($order_info['api_name'])) == 'ecom_express_surface_2kg_ssl') : ?>
 						<?php
 						$path = "assets/custom/img/ecom.jpg";
 						$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -104,7 +104,7 @@
 						?>
 						<img src="<?php echo $base64_img ?>" width="200" height="80">
 					<?php endif; ?>
-					<?php if ($order_info['api_name'] == 'Shadowfax_Direct') : ?>
+					<?php if ($order_info['api_name'] == 'Shadowfax_Direct' || strtolower(trim($order_info['api_name'])) == 'shadowfax_surface_ssl') : ?>
 						<?php
 						$path = "assets/custom/img/shadowfax.jpg";
 						$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -112,6 +112,42 @@
 						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
 						?>
 						<img src="<?php echo $base64_img ?>" width="200" height="80">
+					<?php endif; ?>
+					<?php if (strtolower(trim($order_info['api_name'])) == 'blue_dart_ssl' || strtolower(trim($order_info['api_name'])) == 'blue_dart_surface_ssl') : ?>
+						<?php
+						$path = "assets/custom/img/Bluedart.jpg";
+						$type = pathinfo($path, PATHINFO_EXTENSION);
+						$file_data = file_get_contents($path);
+						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+						?>
+						<img src="<?php echo $base64_img ?>" width="200" height="80">
+					<?php endif; ?>
+					<?php if (strtolower(trim($order_info['api_name'])) == 'amazon_shipping_5kg_ssl' || strtolower(trim($order_info['api_name'])) == 'amazon_shipping_1kg_ssl' || strtolower(trim($order_info['api_name'])) == 'amazon_shipping_2kg_ssl') : ?>
+						<?php
+						$path = "assets/custom/img/amazon.jpeg";
+						$type = pathinfo($path, PATHINFO_EXTENSION);
+						$file_data = file_get_contents($path);
+						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+						?>
+						<img src="<?php echo $base64_img ?>" width="200" height="80">
+					<?php endif; ?>
+					<?php if (strtolower(trim($order_info['api_name'])) == 'dtdc_2kg_ssl' || strtolower(trim($order_info['api_name'])) == 'dtdc_surface_ssl') : ?>
+						<?php
+						$path = "assets/custom/img/dtdc.jpg";
+						$type = pathinfo($path, PATHINFO_EXTENSION);
+						$file_data = file_get_contents($path);
+						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+						?>
+						<img src="<?php echo $base64_img ?>" width="200" height="80">
+					<?php endif; ?>
+					<?php if (strtolower(trim($order_info['api_name'])) == 'kerry_indev_express_surface_ssl') : ?>
+						<?php
+						$path = "assets/custom/img/kerry_indev.jpg";
+						$type = pathinfo($path, PATHINFO_EXTENSION);
+						$file_data = file_get_contents($path);
+						$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+						?>
+						<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Kerry Indev Express">
 					<?php endif; ?>
 				</td>
 				<td style="text-align:center;"><b><?php if ($order_info['order_type'] == 0 || $order_info['order_type'] == "0") {

@@ -66,7 +66,7 @@
 					<table class="table_order wrapper-page1" cellpadding="0" cellspacing="0">
 						<tr>
 							<td colspan="2">
-								<?php if ($single_order['api_name'] == 'Delhivery_Surface'  || $single_order['api_name'] == 'Delhivery_Direct' || $single_order['api_name'] == 'Deliverysexpress_Direct') : ?>
+								<?php if ($single_order['api_name'] == 'Delhivery_Surface'  || $single_order['api_name'] == 'Delhivery_Direct' || $single_order['api_name'] == 'Deliverysexpress_Direct' || strpos($single_order['api_name'], 'delhivery') !== false) : ?>
 									<?php
 									$path = "assets/custom/img/delhivery.jpg";
 									$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -76,7 +76,7 @@
 									<img src="<?php echo $base64_img; ?>" width="200" height="80">
 								<?php endif; ?>
 
-								<?php if ($single_order['api_name'] == 'Xpressbees_Surface' || $single_order['api_name'] == 'Xpressbees_Direct' || $single_order['api_name'] == 'Xpressbeesair_Direct') : ?>
+								<?php if ($single_order['api_name'] == 'Xpressbees_Surface' || $single_order['api_name'] == 'Xpressbees_Direct' || $single_order['api_name'] == 'Xpressbeesair_Direct' || strpos($single_order['api_name'], 'xpressbees') !== false) : ?>
 									<?php
 									$path = "assets/custom/img/xpressbees.jpg";
 									$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -86,7 +86,7 @@
 									<img src="<?php echo $base64_img; ?>" width="200" height="80">
 								<?php endif; ?>
 
-								<?php if ($single_order['api_name'] == 'Ekart_Surface' || $single_order['api_name'] == 'Ecart_air') : ?>
+								<?php if ($single_order['api_name'] == 'Ekart_Surface' || $single_order['api_name'] == 'Ecart_air' || strpos($single_order['api_name'], 'ekart') !== false) : ?>
 									<?php
 									$path = "assets/custom/img/ekart.jpg";
 									$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -96,7 +96,7 @@
 									<img src="<?php echo $base64_img; ?>" width="200" height="80">
 								<?php endif; ?>
 
-								<?php if ($single_order['api_name'] == 'Ecom_Direct') : ?>
+								<?php if ($single_order['api_name'] == 'Ecom_Direct' || strpos($single_order['api_name'], 'ecom') !== false) : ?>
 									<?php
 									$path = "assets/custom/img/ecom.jpg";
 									$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -115,7 +115,7 @@
 									?>
 									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Uddan Express">
 								<?php endif; ?>
-								<?php if ($single_order['api_name'] == 'Shadowfax_Direct') : ?>
+								<?php if ($single_order['api_name'] == 'Shadowfax_Direct' || strpos($single_order['api_name'], 'shadowfax') !== false) : ?>
 									<?php
 									$path = "assets/custom/img/shadowfax.jpg";
 									$type = pathinfo($path, PATHINFO_EXTENSION);
@@ -123,6 +123,42 @@
 									$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
 									?>
 									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Uddan Express">
+								<?php endif; ?>
+								<?php if (strpos($single_order['api_name'], 'dtdc') !== false) : ?>
+									<?php
+									$path = "assets/custom/img/dtdc.jpg";
+									$type = pathinfo($path, PATHINFO_EXTENSION);
+									$file_data = file_get_contents($path);
+									$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+									?>
+									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Uddan Express">
+								<?php endif; ?>
+								<?php if (strpos($single_order['api_name'], 'amazone') !== false) : ?>
+									<?php
+									$path = "assets/custom/img/amazon.jpeg";
+									$type = pathinfo($path, PATHINFO_EXTENSION);
+									$file_data = file_get_contents($path);
+									$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+									?>
+									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Uddan Express">
+								<?php endif; ?>
+								<?php if (strpos($single_order['api_name'], 'blue') !== false) : ?>
+									<?php
+									$path = "assets/custom/img/Bluedart.jpg";
+									$type = pathinfo($path, PATHINFO_EXTENSION);
+									$file_data = file_get_contents($path);
+									$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+									?>
+									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Uddan Express">
+								<?php endif; ?>
+								<?php if (strpos($single_order['api_name'], 'kerry') !== false) : ?>
+									<?php
+									$path = "assets/custom/img/kerry_indev.jpg";
+									$type = pathinfo($path, PATHINFO_EXTENSION);
+									$file_data = file_get_contents($path);
+									$base64_img = 'data:image/' . $type . ';base64,' . base64_encode($file_data);
+									?>
+									<img src="<?php echo $base64_img ?>" width="200" height="80" alt="Kerry Indev Express">
 								<?php endif; ?>
 							</td>
 							<td style="text-align:center;"><b><?php if ($single_order['order_type'] == 0) {

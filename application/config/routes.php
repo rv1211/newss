@@ -148,6 +148,9 @@ $route['manage-logistic/change_status/(:num)'] = "Logistic/change_status";
 $route['manage-rule/change_status/(:num)'] = "Logistic/change_rule_status";
 //rule list table
 $route['loadrule'] = "Logistic/rulelist";
+
+$route['import-logistic'] = 'Logistic/import_logistic';
+
 //manage single shipping price
 $route['shipping-price'] = "Price/index";
 $route['manage-price'] = 'Price/manage_price';
@@ -325,6 +328,8 @@ $route['error-order-list'] = 'Order_list/errororder_list_view';
 $route['errorOrderList'] = 'Order_list/error_order_table';
 $route['waiting-order-list'] = 'Order_list/waitingorder_list_view';
 $route['waitingOrderList'] = 'Order_list/waiting_order_table';
+$route['lost-Order-List'] = 'Order_list/lostorder_list_view';
+$route['lostOrderList'] = 'Order_list/lost_order_table';
 
 $route['packing-slip-first/(:num)'] = 'Order_list/packing_slip/$1';
 $route['packing-slip-second/(:num)'] = 'Order_list/new_single_packing_slip/$1';
@@ -432,6 +437,7 @@ $route['get-delhivery-express-tracking-detail'] = "Trackingwebhook_controller/ge
 $route['ecom-tracking'] = 'Tracking_webhook/ecom_tracking_webhook';
 $route['get-udaan-tracking-detail'] = 'Tracking_webhook/udaan_tracking_webhook';
 $route['ekart-tracking'] = 'Tracking_webhook/ekart_tracking_webhook';
+$route['ssl-tracking'] = 'Tracking_webhook/ship_rocket_webhook';
 
 //new cod remitance
 $route['cod-remittance'] = 'Codremittance_new/index';

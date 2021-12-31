@@ -117,6 +117,11 @@ class Zedship_cron extends CI_Controller
 				$response = shadowfax_direct::create_order($value['id'], 1);
 				$createOrder_response_log['order_response'] = $response;
 				file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
+			} else if (strpos($value['api_name'], 'ssl') !== false) {
+				$this->load->helper('shiprocket_direct');
+				$response = shiprocket_direct::create_order($value['id'], 1);
+				$createOrder_response_log['order_response'] = $response;
+				file_put_contents(APPPATH . 'logs/create_order_simple/' . date("d-m-Y") . '_create_order.txt', print_r($createOrder_response_log, true), FILE_APPEND);
 			}
 			if ($response['status'] == 1) {
 				$success_count++;

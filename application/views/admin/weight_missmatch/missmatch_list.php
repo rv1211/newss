@@ -4,6 +4,7 @@
 		<tr>
 			<th>Oreder Id</th>
 			<th>Order Number</th>
+			<th>Email</th>
 			<th>AWB No</th>
 			<th>Date</th>
 			<th>Logistic</th>
@@ -12,6 +13,7 @@
 			<th>Debited Rate</th>
 			<th>Actual Rate</th>
 			<th>Diffrence</th>
+			<th>Remarks</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,14 +21,16 @@
 			<tr>
 				<td><?php echo $record['order_no']; ?></td>
 				<td><?php echo $record['customer_order_no']; ?></td>
+				<td><?php echo $record['email']; ?></td>
 				<td><?php echo $record['awb_number']; ?></td>
 				<td><?php echo $record['created_date']; ?></td>
 				<td><?php echo $record['logistic_name']; ?></td>
 				<td><?php echo (($record['physical_weight'] > $record['volumetric_weight']) ? $record['physical_weight'] : $record['volumetric_weight']); ?></td>
 				<td><?php echo $record['actual_weight']; ?></td>
-				<td>₹ <?php echo number_format($record['total_shipping_amount'], 2); ?></td>
-				<td>₹<?php echo number_format($record['subtotal'], 2); ?></td>
-				<td> ₹<?php echo number_format($record['subtotal'] - $record['total_shipping_amount'], 2); ?></td>
+				<td>RS. <?php echo number_format($record['total_shipping_amount'], 2); ?></td>
+				<td>RS.<?php echo number_format($record['subtotal'], 2); ?></td>
+				<td> RS.<?php echo number_format($record['subtotal'] - $record['total_shipping_amount'], 2); ?></td>
+				<td> <?php echo $record['remarks']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
@@ -43,6 +47,19 @@
 		"language": {
 			"infoFiltered": "",
 		},
+		dom: 'lBfrtip',
+		buttons: [{
+			extend: 'csv',
+			filename: 'Missmatch List',
+			text: 'Export',
+			className: 'btn btn-primary export_btn_errororder_list ',
+			exportOptions: {
+				//columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+				// columns: 'th:not(:last-child)'
+				columns: "thead th:not(.noExport)"
+			},
+
+		}]
 
 	});
 </script>

@@ -37,7 +37,6 @@ class delhiver_direct
 				$isBulk = "S";
 				break;
 		}
-		// lq();
 
 		if ($single_order_info["order_no"] == '') {
 			$order_id_for_api =  'SSL' . CUSTOM::remove_special_characters_and_extra_space(str_replace("_", "-", $single_order_info["id"] . '-' . rand(001, 999) . $isBulk));

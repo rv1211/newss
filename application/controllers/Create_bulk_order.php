@@ -118,7 +118,7 @@ class Create_bulk_order extends Auth_Controller
 							if ($value[$val] != "" || $value[$val] != null) {
 								$ins_data[$val] = $value[$val];
 							} else {
-								if ($val != "k") {
+								if ($val != "k" && $allDataInSheet[1][$val] != '') {
 									$ins_data[$val] = '';
 									$error = $allDataInSheet[1][$val] . ' Is Empty';
 								}

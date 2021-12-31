@@ -1446,3 +1446,44 @@ $("#pre_awb_list").DataTable({
 	},
 
 });
+/**
+ * Lodt Order List
+ */
+
+$("#lostorder_list").DataTable({
+	"serverSide": true,
+	"pageLength": 100,
+	"lengthMenu": [
+		[100, 500, 1000, -1],
+		[100, 500, 1000, "All"]
+	],
+	"ajax": {
+		"url": hiddenURL + 'lostOrderList',
+	},
+
+	"language": {
+		"infoFiltered": "",
+	},
+	"columnDefs": [{
+		"targets": [0, 9, 10],
+		"orderable": false,
+		"searchable": false,
+	}],
+	"order": [
+		[8, "desc"]
+	],
+	dom: 'lBfrtip',
+	buttons: [{
+		extend: 'csv',
+		filename: 'Error Order List',
+		text: 'Export',
+		className: 'btn btn-primary export_btn_errororder_list ',
+		exportOptions: {
+			//columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+			// columns: 'th:not(:last-child)'
+			columns: "thead th:not(.noExport)"
+		},
+
+	}]
+
+});
